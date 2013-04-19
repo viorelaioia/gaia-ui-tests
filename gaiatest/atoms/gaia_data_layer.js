@@ -507,7 +507,7 @@ var GaiaDataLayer = {
       });
     });
   },
-  
+
   btSetDeviceName: function(device_name, aCallback) {
     var callback = aCallback || marionetteScriptFinished;
     console.log("Setting device's bluetooth name to '%s'" % device_name);
@@ -525,17 +525,17 @@ var GaiaDataLayer = {
       };
     };
     req.onerror = function(event) {
-    	console.log("getDefaultAdapter returned unexpected error: " + event.target.error.name);
-    	callback(false);
+      console.log("getDefaultAdapter returned unexpected error: " + event.target.error.name);
+      callback(false);
     };
   },
 
   btSetDeviceDiscoverable: function(discoverable, aCallback) {
 	var callback = aCallback || marionetteScriptFinished;
 	if (discoverable == true) {
-		console.log("Making the device discoverable via Bluetooth");
+	  console.log("Making the device discoverable via Bluetooth");
 	} else {
-		console.log("Turning device bluetooth discoverable mode OFF");
+	  console.log("Turning device bluetooth discoverable mode OFF");
 	}
 
     var req = window.navigator.mozBluetooth.getDefaultAdapter();
@@ -543,16 +543,16 @@ var GaiaDataLayer = {
       var adapter = req.result;
       var req_discoverable = adapter.setDiscoverable(discoverable);
       req_discoverable.onsuccess = function() {
-    	  callback(true);
+        callback(true);
       };
-      req_discoverable = function(event) {
+      req_discoverable.onerror = function(event) {
     	console.log("setDiscoverable returned unexpected error: " + event.target.error.name);
     	callback(false);
       };
     };
     req.onerror = function(event) {
-    	console.log("getDefaultAdapter returned unexpected error: " + event.target.error.name);
-    	callback(false);
+      console.log("getDefaultAdapter returned unexpected error: " + event.target.error.name);
+      callback(false);
     };
   }
 };

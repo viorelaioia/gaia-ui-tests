@@ -7,7 +7,7 @@
 
 import time
 
-from gaiatest.tests.bluetooth.bluetooth_host import BluetoothHost
+from gaiatest.utils.bluetooth.bluetooth_host import BluetoothHost
 from gaiatest import GaiaTestCase
 
 
@@ -17,7 +17,7 @@ class TestBluetoothDiscoverable(GaiaTestCase):
         GaiaTestCase.setUp(self)
 
         # Bluetooth host object
-        self.bt_host = BluetoothHost()
+        self.bt_host = BluetoothHost(self.marionette)
 
         # If bluetooth is enabled on the device turn it off to ensure no existing connections
         # Use common methods once https://github.com/mozilla/gaia-ui-tests/pull/600 is merged
@@ -46,7 +46,7 @@ class TestBluetoothDiscoverable(GaiaTestCase):
         self.data_layer.bt_set_device_discoverable(True)
 
         # Have host machine perform inquiry and look for our device
-        device_found = self.bt_host.is_device_visible(self, device_name)
+        device_found = self.bt_host.is_device_visible(device_name)
         self.assertTrue(device_found, "Host should see our device (device discoverable mode is ON)")
 
         # Take the device out of discoverable mode
@@ -54,7 +54,8 @@ class TestBluetoothDiscoverable(GaiaTestCase):
         self.data_layer.bt_set_device_discoverable(False)
 
         # Now have host machine inquire and shouldn't find our device
-        device_found = self.bt_host.is_device_visible(self, device_name)
+        time.sleep(5)
+        device_found = self.bt_host.is_device_visible(device_name)
         self.assertFalse(device_found, "Host shouldn't see our device (device discoverable mode is OFF)")
 
         # Disable device-side bluetooth
