@@ -9,28 +9,28 @@ import bluetooth
 
 class BluetoothHost():
 
-    def inquiry(self, log_info=True):
+    def __init__(self, marionette):
+        self.marionette = marionette
+
+    def inquiry(self):
         # Have the host machine perform a bluetooth inquiry; return devices seen
         nearby_devices = []
-        if log_info:
-            self.marionette.log("Performing host-side bluetooth inquiry...")
+        self.marionette.log("Performing host-side bluetooth inquiry...")
         try:
             nearby_devices = bluetooth.discover_devices(duration = 10, lookup_names = True)
         except:
-            if log_info:
-                self.marionette.log("Host inquiry failed. Is the host-side bluetooth adaptor enabled?")
-        if log_info:
-            self.marionette.log("Host machine found %d bluetooth device(s) nearby:" % len(nearby_devices))
-            for address, name in nearby_devices:
-                self.marionette.log("==> %s - %s" % (address, name))
+            self.marionette.log("Host inquiry failed. Is the host-side bluetooth adaptor enabled?")
+        self.marionette.log("Host machine found %d bluetooth device(s) nearby:" % len(nearby_devices))
+        for address, name in nearby_devices:
+            self.marionette.log("==> %s - %s" % (address, name))
         return nearby_devices
-    
-    def is_device_visible(self, device_to_find, log_info=True):
+
+    def is_device_visible(self, device_to_find):
         # Have the host bluetooth adaptor search for the given device; up to 3 attempts
         device_found = False;
         attempts = 3;
         for attempt in range(attempts):
-            nearby_devices = self.inqury(self, log_info)
+            nearby_devices = self.inquiry()
             if len(nearby_devices) == 0:
                 continue
             else:
