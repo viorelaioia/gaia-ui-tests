@@ -432,7 +432,7 @@ var GaiaDataLayer = {
     });
   },
 
-  btSetDeviceName: function(device_name, aCallback) {
+  bluetoothSetDeviceName: function(device_name, aCallback) {
     var callback = aCallback || marionetteScriptFinished;
     console.log("Setting device's bluetooth name to '%s'" % device_name);
 
@@ -454,7 +454,7 @@ var GaiaDataLayer = {
     };
   },
 
-  btSetDeviceDiscoverable: function(discoverable, aCallback) {
+  bluetoothSetDeviceDiscoverable: function(discoverable, aCallback) {
 	var callback = aCallback || marionetteScriptFinished;
 	if (discoverable == true) {
 	  console.log("Making the device discoverable via Bluetooth");
