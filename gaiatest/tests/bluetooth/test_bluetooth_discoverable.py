@@ -24,6 +24,7 @@ class TestBluetoothDiscoverable(GaiaTestCase):
 
         # Enable device-side bluetooth
         self.data_layer.enable_bluetooth(self)
+        self.assertTrue(self.data_layer.bt_is_bluetooth_enabled)
 
         # Remove any existing device pairings so we are starting clean
         self.data_layer.unpair_all_bluetooth_devices(self)
@@ -32,11 +33,11 @@ class TestBluetoothDiscoverable(GaiaTestCase):
         # Set our device's bluetooth name uniquely so we can identify it
         device_name = str(time.time())
         self.marionette.log("Setting device's bluetooth name to '%s'" % device_name)
-        self.data_layer.bluetooth_set_device_name(device_name)
+        self.data_layer.bt_set_device_bluetooth_name(device_name)
 
         # Place our device in discoverable mode so it can be found by host machine
         self.marionette.log("Setting device discoverable mode ON")
-        self.data_layer.bluetooth_set_device_discoverable(True)
+        self.data_layer.bt_set_device_bluetooth_discoverable(True)
 
         # Have host machine perform inquiry and look for our device
         device_found = self.bluetooth_host.is_device_visible(device_name)
@@ -44,7 +45,7 @@ class TestBluetoothDiscoverable(GaiaTestCase):
 
         # Take the device out of discoverable mode
         self.marionette.log("Setting device discoverable mode OFF")
-        self.data_layer.bluetooth_set_device_discoverable(False)
+        self.data_layer.bt_set_device_bluetooth_discoverable(False)
 
         # Now have host machine inquire and shouldn't find our device
         time.sleep(5)
@@ -53,3 +54,4 @@ class TestBluetoothDiscoverable(GaiaTestCase):
 
         # Disable device-side bluetooth
         self.data_layer.disable_bluetooth(self)
+        self.assertFalse(self.data_layer.bt_is_bluetooth_enabled)
