@@ -267,16 +267,14 @@ class GaiaData(object):
                                        "if(telephony.active) telephony.active.hangUp();")
 
     def bt_set_device_bluetooth_name(self, device_name):
-        self.marionette.switch_to_frame()
         result = self.marionette.execute_async_script('return GaiaDataLayer.bluetoothSetDeviceName(%s);' % device_name)
         assert result, "Unable to set device's bluetooth name to %s" % device_name
 
-    def bt_set_device_bluetooth_discoverable(self, discoverable):
-        self.marionette.switch_to_frame()
+    def bt_set_device_bluetooth_discoverable_mode(self, discoverable):
         if (discoverable == True):
-            result = self.marionette.execute_async_script('return GaiaDataLayer.bluetoothSetDeviceDiscoverable(true);')
+            result = self.marionette.execute_async_script('return GaiaDataLayer.bluetoothSetDeviceDiscoverableMode(true);')
         else:
-            result = self.marionette.execute_async_script('return GaiaDataLayer.bluetoothSetDeviceDiscoverable(false);')
+            result = self.marionette.execute_async_script('return GaiaDataLayer.bluetoothSetDeviceDiscoverableMode(false);')
         assert result, 'Able to set the device bluetooth discoverable mode'
 
 

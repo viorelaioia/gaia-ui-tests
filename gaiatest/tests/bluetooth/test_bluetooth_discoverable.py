@@ -3,6 +3,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 # NOTE: Requires the 'PyBluez' host-side Bluetooth python module
+# This has only been tested with PyBluez on Ubuntu 12
 # See: http://code.google.com/p/pybluez/wiki/Documentation
 
 import time
@@ -38,7 +39,7 @@ class TestBluetoothDiscoverable(GaiaTestCase):
 
         # Place our device in discoverable mode so it can be found by host machine
         self.marionette.log("Setting device discoverable mode ON")
-        self.data_layer.bt_set_device_bluetooth_discoverable(True)
+        self.data_layer.bt_set_device_bluetooth_discoverable_mode(True)
 
         # Have host machine perform inquiry and look for our device
         device_found = self.bluetooth_host.is_device_visible(device_name)
@@ -46,7 +47,7 @@ class TestBluetoothDiscoverable(GaiaTestCase):
 
         # Take the device out of discoverable mode
         self.marionette.log("Setting device discoverable mode OFF")
-        self.data_layer.bt_set_device_bluetooth_discoverable(False)
+        self.data_layer.bt_set_device_bluetooth_discoverable_mode(False)
         time.sleep(10)
 
         # Now have host machine inquire and shouldn't find our device

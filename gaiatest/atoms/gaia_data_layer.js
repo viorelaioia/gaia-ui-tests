@@ -454,10 +454,10 @@ var GaiaDataLayer = {
     };
   },
 
-  bluetoothSetDeviceDiscoverable: function(discoverable, aCallback) {
+  bluetoothSetDeviceDiscoverableMode: function(discoverable, aCallback) {
 	var callback = aCallback || marionetteScriptFinished;
 	if (discoverable == true) {
-	  console.log("Making the device discoverable via Bluetooth");
+	  console.log("Making the device discoverable via bluetooth");
 	} else {
 	  console.log("Turning device bluetooth discoverable mode OFF");
 	}
