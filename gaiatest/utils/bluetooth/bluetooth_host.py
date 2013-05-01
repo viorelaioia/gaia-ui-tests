@@ -2,7 +2,8 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-# This requires a host-side Bluetooth adapter and the 'pybluez' module
+# This requires a host-side Bluetooth adapter and the 'PyBluez' module
+# This has only been tested with the PyBluez module on Ubuntu
 # See: http://code.google.com/p/pybluez/wiki/Documentation
 import bluetooth
 
@@ -17,7 +18,7 @@ class BluetoothHost():
         nearby_devices = []
         self.marionette.log("Performing host-side bluetooth inquiry...")
         try:
-            nearby_devices = bluetooth.discover_devices(duration = 10, lookup_names = True)
+            nearby_devices = bluetooth.discover_devices(duration=10, lookup_names=True)
         except:
             self.marionette.log("Host inquiry failed. Is the host-side bluetooth adaptor enabled?")
         self.marionette.log("Host machine found %d bluetooth device(s) nearby:" % len(nearby_devices))
@@ -27,8 +28,8 @@ class BluetoothHost():
 
     def is_device_visible(self, device_to_find):
         # Have the host bluetooth adaptor search for the given device; up to 3 attempts
-        device_found = False;
-        attempts = 3;
+        device_found = False
+        attempts = 3
         for attempt in range(attempts):
             nearby_devices = self.inquiry()
             if len(nearby_devices) == 0:
