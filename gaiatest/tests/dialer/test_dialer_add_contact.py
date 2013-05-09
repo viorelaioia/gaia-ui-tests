@@ -60,11 +60,6 @@ class TestDialerAddContact(GaiaTestCase):
         add_new_contact = self.marionette.find_element(*self._add_new_contact_button_locator)
         self.marionette.tap(add_new_contact)
 
-        # Tap on "Create New Contact"
-        self.wait_for_element_displayed(*self._create_new_contact_locator)
-        create_new_contact = self.marionette.find_element(*self._create_new_contact_locator)
-        self.marionette.tap(create_new_contact)
-
         # Switch to add contacts frame
         self.marionette.switch_to_frame()
         self.wait_for_element_present(*self._new_contact_frame_locator)
