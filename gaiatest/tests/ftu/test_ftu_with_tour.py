@@ -12,6 +12,7 @@ class TestFtu(GaiaTestCase):
     _next_button_locator = ('id', 'forward')
 
     _section_languages_locator = ('id', 'languages')
+    _section_cell_data_locator = ('id', 'data_3g')
     _section_wifi_locator = ('id', 'wifi')
     _section_date_time_locator = ('id', 'date_and_time')
     _section_import_contacts_locator = ('id', 'import_contacts')
@@ -45,6 +46,9 @@ class TestFtu(GaiaTestCase):
 
         # Go through the FTU setup as quickly as possible to get to the Tour section
         self.wait_for_element_displayed(*self._section_languages_locator)
+        # Tap next
+        self.marionette.tap(self.marionette.find_element(*self._next_button_locator))
+        self.wait_for_element_displayed(*self._section_cell_data_locator)
         # Tap next
         self.marionette.tap(self.marionette.find_element(*self._next_button_locator))
         self.wait_for_element_displayed(*self._section_wifi_locator)

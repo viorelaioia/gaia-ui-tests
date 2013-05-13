@@ -19,6 +19,10 @@ class TestFtu(GaiaTestCase):
     _section_languages_locator = ('id', 'languages')
     _listed_languages_locator = ('css selector', "#languages ul li input[name='language.current']")
 
+    # Step Cell data section
+    _section_cell_data_locator = ('id', 'data_3g')
+    _enable_data_checkbox_locator = ('css selector', '#data_3g .pack-end')
+
     # Step Wifi
     _section_wifi_locator = ('id', 'wifi')
     _found_wifi_networks_locator = ('css selector', '#networks li')
@@ -102,6 +106,16 @@ class TestFtu(GaiaTestCase):
 
         # Tap next
         self.wait_for_element_displayed(*self._next_button_locator)
+        self.marionette.tap(self.marionette.find_element(*self._next_button_locator))
+        self.wait_for_element_displayed(*self._section_cell_data_locator)
+
+        # Tap enable data
+        self.marionette.tap(self.marionette.find_element(*self._enable_data_checkbox_locator))
+
+        self.wait_for_condition(lambda m: self.data_layer.is_cell_data_connected,
+                                message="Cell data was not connected by FTU app")
+
+        # Tap next
         self.marionette.tap(self.marionette.find_element(*self._next_button_locator))
         self.wait_for_element_displayed(*self._section_wifi_locator)
 
