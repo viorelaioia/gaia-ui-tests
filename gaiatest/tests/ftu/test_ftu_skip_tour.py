@@ -122,7 +122,9 @@ class TestFtu(GaiaTestCase):
             self.marionette.tap(self.marionette.find_element(*self._join_network_locator))
 
         self.wait_for_condition(
-            lambda m: wifi_network.find_element(*self._network_state_locator).text == "Connected")
+            lambda m: m.find_element(
+                'id', self.testvars['wifi']['ssid']).find_element(*self._network_state_locator).text == "Connected"
+        )
 
         self.assertTrue(self.data_layer.is_wifi_connected(self.testvars['wifi']),
                         "WiFi was not connected via FTU app")
