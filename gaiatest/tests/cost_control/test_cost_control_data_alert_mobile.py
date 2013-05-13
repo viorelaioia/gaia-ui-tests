@@ -23,8 +23,8 @@ class TestCostControlDataAlertMobile(GaiaTestCase):
         cost_control.launch()
         cost_control.run_ftu_accepting_defaults()
 
-        self.assertTrue(cost_control.is_mobile_data_tracking_on)
-        self.assertFalse(cost_control.is_wifi_data_tracking_on)
+        cost_control.toggle_mobile_data_tracking(True)
+        cost_control.toggle_wifi_data_tracking(False)
 
         settings = cost_control.tap_settings()
         settings.toggle_data_alert_switch(True)

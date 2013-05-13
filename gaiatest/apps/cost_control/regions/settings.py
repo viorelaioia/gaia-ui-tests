@@ -23,9 +23,6 @@ class Settings(Base):
 
     def __init__(self, marionette):
         Base.__init__(self, marionette)
-        # go into iframe of usage app settings
-        self.wait_for_element_displayed(*self._settings_iframe_locator)
-        self.marionette.switch_to_frame(self.marionette.find_element(*self._settings_iframe_locator))
         self.wait_for_element_displayed(*self._settings_title_locator)
 
     def toggle_data_alert_switch(self, value):
