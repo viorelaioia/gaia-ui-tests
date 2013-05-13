@@ -11,12 +11,12 @@ class TestSms(GaiaTestCase):
     # Summary page
     _summary_header_locator = ('xpath', "//h1[text()='Messages']")
     _create_new_message_locator = ('id', 'icon-add')
-    _unread_message_locator = ('css selector', "#threads-container li a[href^='#num=']")
+    _unread_message_locator = ('css selector', "#thread-list-container li a[href^='#num=']")
 
     # Message composition
-    _receiver_input_locator = ('css selector', '#messages-recipients-container span.recipient')
-    _message_field_locator = ('id', 'messages-input')
-    _send_message_button_locator = ('id', 'messages-send-button')
+    _receiver_input_locator = ('id', 'receiver-input')
+    _message_field_locator = ('id', 'message-to-send')
+    _send_message_button_locator = ('id', 'send-message')
     _back_header_link_locator = ('xpath', '//header/a[1]')
     _message_sending_spinner_locator = (
         'css selector',
