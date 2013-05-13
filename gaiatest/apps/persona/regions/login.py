@@ -35,7 +35,6 @@ class Login(Base):
         # TODO: because of issue: https://github.com/mozilla/browserid/issues/3318 we can't wait for the right element
         time.sleep(5)
 
-
     def type_email(self, value):
         email_field = self.marionette.find_element(*self._email_input_locator)
         email_field.send_keys(value)
@@ -76,7 +75,7 @@ class Login(Base):
 
     @property
     def form_section_id(self):
-        self.wait_for_element_displayed(*self._form_section_locator)
+        self.wait_for_element_displayed(*self._form_section_locator, timeout=120)
         return self.marionette.find_element(*self._form_section_locator).get_attribute('id')
 
     def wait_for_sign_in_button(self):
