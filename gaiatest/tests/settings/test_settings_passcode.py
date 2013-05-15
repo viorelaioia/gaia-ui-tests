@@ -22,6 +22,8 @@ class TestSettingsPasscode(GaiaTestCase):
 
         GaiaTestCase.setUp(self)
 
+        # Enable lock screen
+        self.data_layer.set_setting('lockscreen.enabled', True)
         # launch the Settings app
         self.app = self.apps.launch('Settings')
 
