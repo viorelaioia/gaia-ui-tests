@@ -55,6 +55,7 @@ class Login(Base):
         next_button = self.marionette.find_element(*self._continue_button_locator)
         # TODO:  Remove workaround after bug 845849
         self.marionette.execute_script("arguments[0].scrollIntoView(false);", [next_button])
+        self.wait_for_element_displayed(*self._continue_button_locator)
         self.marionette.tap(next_button)
         self.wait_for_element_not_displayed(*self._continue_button_locator)
 
