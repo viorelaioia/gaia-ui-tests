@@ -10,6 +10,7 @@ class TestEverythingMe(GaiaTestCase):
     # Everything.Me locators
     _shortcut_items_locator = ('css selector', '#shortcuts-items li')
     _app_icon_locator = ('css selector', 'div.evme-apps li.cloud')
+    _loading_bar_locator = ('id', 'loading-overlay')
 
     # Homescreen locators
     _homescreen_frame_locator = ('css selector', 'div.homescreen > iframe')
@@ -37,7 +38,7 @@ class TestEverythingMe(GaiaTestCase):
         self.marionette.execute_script("window.wrappedJSObject.GridManager.goToPreviousPage();")
 
         # Check for the available application shortcut categories
-        self.wait_for_element_present(*self._shortcut_items_locator)
+        self.wait_for_element_not_displayed(*self._loading_bar_locator)
 
         # Check that there are shortcut application categories available
         shortcuts = self.marionette.find_elements(*self._shortcut_items_locator)
