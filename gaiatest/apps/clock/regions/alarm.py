@@ -112,7 +112,6 @@ class NewAlarm(Clock):
 
     def _flick_menu_up(self, locator):
         self.wait_for_element_displayed(*self._current_element(*locator))
-        self.wait_for_element_displayed(*self._next_element(*locator))
         current_element = self.marionette.find_element(*self._current_element(*locator))
         next_element = self.marionette.find_element(*self._next_element(*locator))
 
@@ -125,7 +124,6 @@ class NewAlarm(Clock):
 
     def _flick_menu_down(self, locator):
         self.wait_for_element_displayed(*self._current_element(*locator))
-        self.wait_for_element_displayed(*self._next_element(*locator))
         current_element = self.marionette.find_element(*self._current_element(*locator))
         next_element = self.marionette.find_element(*self._next_element(*locator))
 
