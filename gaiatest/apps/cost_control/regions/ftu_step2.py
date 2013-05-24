@@ -2,6 +2,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+import time
 from gaiatest.apps.cost_control.app import CostControl
 from gaiatest.apps.cost_control.regions.ftu_step3 import FTUStep3
 
@@ -30,11 +31,13 @@ class FTUStep2(CostControl):
         # loop options until we find the match
         for li in options:
             if li.text == value:
-                li.click()
+                li.tap()
                 break
-        self.marionette.tap(self.marionette.find_element(*self._set_report_period_button_locator))
+        # Wait for option to be selected
+        time.sleep(1)
+        self.marionette.find_element(*self._set_report_period_button_locator).tap()
 
     def tap_next(self):
         self.wait_for_element_displayed(*self._next_button_locator)
-        self.marionette.tap(self.marionette.find_element(*self._next_button_locator))
+        self.marionette.find_element(*self._next_button_locator).tap()
         return FTUStep3(self.marionette)
