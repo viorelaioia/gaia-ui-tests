@@ -68,6 +68,7 @@ class Browser(Base):
         self.marionette.switch_to_frame(self.app.frame)
 
     def tap_go_button(self):
+        self.wait_for_element_displayed(*self._url_button_locator)
         self.marionette.find_element(*self._url_button_locator).tap()
         self.wait_for_throbber_not_visible()
         self.wait_for_element_displayed(*self._bookmark_button_locator)
