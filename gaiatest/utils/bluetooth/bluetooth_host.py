@@ -6,6 +6,7 @@
 # This has only been tested with the PyBluez module on Ubuntu
 # See: http://code.google.com/p/pybluez/wiki/Documentation
 import bluetooth
+import time
 
 
 class BluetoothHost():
@@ -32,6 +33,7 @@ class BluetoothHost():
         attempts = 3
         for attempt in range(attempts):
             nearby_devices = self.inquiry()
+            time.sleep(5)
             if len(nearby_devices) == 0:
                 continue
             else:
