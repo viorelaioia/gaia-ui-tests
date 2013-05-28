@@ -2,7 +2,10 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+from marionette.marionette import Actions
+
 from gaiatest import GaiaTestCase
+
 
 
 class TestEverythingMeInstallApp(GaiaTestCase):
@@ -40,7 +43,7 @@ class TestEverythingMeInstallApp(GaiaTestCase):
         self.marionette.execute_script("window.wrappedJSObject.GridManager.goToPreviousPage();")
 
         # check for the available shortcut categories
-        self.wait_for_element_present(*self._shortcut_items_locator)
+        self.wait_for_element_displayed(*self._shortcut_items_locator)
 
         shortcuts = self.marionette.find_elements(*self._shortcut_items_locator)
         self.assertGreater(len(shortcuts), 0, 'No shortcut categories found')
@@ -52,7 +55,7 @@ class TestEverythingMeInstallApp(GaiaTestCase):
 
         first_app_icon = self.marionette.find_element(*self._apps_icon_locator)
         self.first_app_name = first_app_icon.text
-        self.marionette.long_press(first_app_icon)
+        Actions(self.marionette).long_press(first_app_icon, 2).perform()
 
         self.marionette.switch_to_frame()
 
@@ -99,6 +102,8 @@ class TestEverythingMeInstallApp(GaiaTestCase):
         return pageHelper.getCurrentPageNumber() < (pageHelper.getTotalPagesNumber() - 1);""")
 
     def delete_bookmark(self, bookmark_name):
+        # TODO move this snippet to the Homescreen app object
+        
         self.marionette.execute_script("""
                                           name = arguments[0];
                                           let apps = window.wrappedJSObject.GridManager.getApps();

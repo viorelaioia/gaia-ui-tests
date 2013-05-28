@@ -6,6 +6,78 @@
 
 var GaiaDataLayer = {
 
+  pairBluetoothDevice: function(aDeviceName) {
+    var req = window.navigator.mozBluetooth.getDefaultAdapter();
+    req.onsuccess = function() {
+      var adapter = req.result;
+      adapter.ondevicefound = function(aEvent) {
+        device = aEvent.device;
+        if (device.name === aDeviceName) {
+          var pair = adapter.pair(device);
+          marionetteScriptFinished(true);
+        }
+      };
+      var discovery = adapter.startDiscovery();
+    };
+  },
+
+  unpairAllBluetoothDevices: function() {
+    var req_get_adapter = window.navigator.mozBluetooth.getDefaultAdapter();
+    req_get_adapter.onsuccess = function() {
+      adapter = req_get_adapter.result;
+      var req = adapter.getPairedDevices();
+      req.onsuccess = function() {
+        var total = req.result.slice().length;
+        for (var i = total; i > 0; i--) {
+          var up = adapter.unpair(req.result.slice()[i-1]);
+        }
+      };
+    };
+    marionetteScriptFinished(true);
+  },
+
+  disableBluetooth: function() {
+    var bluetooth = window.navigator.mozBluetooth;
+    if (bluetooth.enabled) {
+      console.log('trying to disable bluetooth');
+      this.setSetting('bluetooth.enabled', false, false);
+      waitFor(
+        function() {
+          marionetteScriptFinished(true);
+        },
+        function() {
+          console.log('bluetooth enable status: ' + bluetooth.enabled);
+          return bluetooth.enabled === false;
+        }
+      );
+    }
+    else {
+      console.log('bluetooth already disabled');
+      marionetteScriptFinished(true);
+    }
+  },
+
+  enableBluetooth: function() {
+    var bluetooth = window.navigator.mozBluetooth;
+    if (!bluetooth.enabled) {
+      console.log('trying to enable bluetooth');
+      this.setSetting('bluetooth.enabled', true, false);
+      waitFor(
+        function() {
+          marionetteScriptFinished(true);
+        },
+        function() {
+          console.log('bluetooth enable status: ' + bluetooth.enabled);
+          return bluetooth.enabled === true;
+        }
+      );
+    }
+    else {
+      console.log('bluetooth already enabled');
+      marionetteScriptFinished(true);
+    }
+  },
+
   insertContact: function(aContact) {
     SpecialPowers.addPermission('contacts-create', true, document);
     var contact = new mozContact();
@@ -324,10 +396,11 @@ var GaiaDataLayer = {
       req.onsuccess = function() {
         var file = req.result;
         if (file) {
-          if (aType === 'music' && file.name.slice(0, 5) === 'DCIM/' && file.name.slice(-4) === '.3gp') {
+          if (aType === 'music' && file.name.slice(0, 13) === '/sdcard/DCIM/' && file.name.slice(-4) === '.3gp') {
             req.continue();
           }
           else {
+            // File.name returns a fully qualified path
             media.push(file.name);
             req.continue();
           }
@@ -363,7 +436,7 @@ var GaiaDataLayer = {
     request.onsuccess = function(event) {
       cursor = event.target.result;
       // Check if message was found
-      if (cursor.message) {
+      if (cursor && cursor.message) {
         msgList.push(cursor.message.id);
         // Now get next message in the list
         cursor.continue();
