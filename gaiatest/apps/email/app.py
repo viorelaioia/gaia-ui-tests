@@ -130,9 +130,7 @@ class ToolBar(Base):
         self.marionette.find_element(*self._edit_locator).tap()
 
     def tap_settings(self):
-        # TODO: el.tap() if not tapping settings button
-        self.wait_for_element_displayed(*self._settings_locator)
-        self.marionette.find_element(*self._settings_locator).click()
+        self.marionette.find_element(*self._settings_locator).tap()
 
     @property
     def is_refresh_visible(self):
