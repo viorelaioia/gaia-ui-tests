@@ -45,14 +45,14 @@ class TestEverythingMe(GaiaTestCase):
 
         # Tap on the first category of shortcuts
         # TODO: Had to revert back to using the first shortcut as v1.0.1 still uses canvas
-        self.marionette.tap(shortcuts[0])
+        shortcuts[0].tap()
 
         self.wait_for_element_displayed(*self._app_icon_locator)
 
         # Due to everythingme HTML we cannot locate by the text...
         app_icons = self.marionette.find_elements(*self._app_icon_locator)
         # ... so we'll just get the first one.
-        self.marionette.tap(app_icons[0])
+        app_icons[0].tap()
 
         # Switch to top level frame then look for the Facebook app
         self.marionette.switch_to_frame()
