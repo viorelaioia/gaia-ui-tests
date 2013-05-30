@@ -121,10 +121,13 @@ class Base(object):
         # loop options until we find the match
         for li in options:
             if li.text == match_string:
-                li.click()
+                # TODO Remove scrollintoView upon resolution of bug 877651
+                self.marionette.execute_script(
+                    'arguments[0].scrollIntoView(false);', [li])
+                li.tap()
                 break
 
-        close_button.click()
+        close_button.tap()
 
         # now back to app
         self.launch()
