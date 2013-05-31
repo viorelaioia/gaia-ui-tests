@@ -59,7 +59,9 @@ class TestSettingsPasscode(GaiaTestCase):
         # create passcode
         self.wait_for_element_displayed(*self._phoneLock_passcode_section_locator)
         passcode_create = self.marionette.find_element(*self._passcode_create_locator)
+
         passcode_create.tap()
+        self.wait_for_element_displayed(*self._phonelock_section_locator)
 
         # assert
         passcode_code = self.data_layer.get_setting('lockscreen.passcode-lock.code')
