@@ -107,7 +107,7 @@ class Header(Base):
     def tap_menu(self):
         self.marionette.find_element(*self._menu_button_locator).tap()
         toolbar = ToolBar(self.marionette)
-        self.wait_for_condition(lambda m: toolbar.is_settings_visible)
+        self.wait_for_condition(lambda m: toolbar.is_visible)
         return toolbar
 
     def tap_compose(self):
@@ -129,10 +129,12 @@ class Header(Base):
 
 
 class ToolBar(Base):
+    _toolbar_locator = ('css selector', '#cardContainer .fld-nav-toolbar')
     _refresh_locator = ('css selector', '#cardContainer .msg-refresh-btn')
     _search_locator = ('css selector', '#cardContainer .msg-search-btn')
     _edit_locator = ('css selector', '#cardContainer .msg-edit-btn')
     _settings_locator = ('css selector', '#cardContainer .fld-nav-settings-btn')
+
 
     def tap_refresh(self):
         self.marionette.find_element(*self._refresh_locator).tap()
@@ -145,6 +147,10 @@ class ToolBar(Base):
 
     def tap_settings(self):
         self.marionette.find_element(*self._settings_locator).tap()
+
+    @property
+    def is_visible(self):
+        return self.marionette.find_element(*self._toolbar_locator).location['x'] == 0
 
     @property
     def is_refresh_visible(self):
