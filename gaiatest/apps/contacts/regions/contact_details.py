@@ -36,10 +36,6 @@ class ContactDetails(Base):
     def image_style(self):
         return self.marionette.find_element(*self._contact_image_locator).get_attribute('style')
 
-    @property
-    def is_image_displayed(self):
-        return self.marionette.find_element(*self._contact_image_locator).is_displayed()
-
     def wait_for_contact_details_to_load(self):
         self.wait_for_element_displayed(*self._call_phone_number_button_locator)
 
