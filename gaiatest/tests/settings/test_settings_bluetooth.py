@@ -9,7 +9,7 @@ class TestBluetoothSettings(GaiaTestCase):
 
     # Bluetooth settings locators
     _bluetooth_settings_locator = ('id', 'menuItem-bluetooth')
-    _bluetooth_region_visibile_locator =('css selector', '#bluetooth.current')
+    _bluetooth_region_visible_locator =('css selector', '#bluetooth.current')
     _bluetooth_checkbox_locator = ('css selector', '#bluetooth-status input')
     _bluetooth_label_locator = ('css selector', '#bluetooth-status span')
 
@@ -33,7 +33,7 @@ class TestBluetoothSettings(GaiaTestCase):
         bluetooth_menu_item.tap()
 
         # wait for the Bluetooth region to be visible
-        self.wait_for_element_present(*self._bluetooth_region_visibile_locator)
+        self.wait_for_element_present(*self._bluetooth_region_visible_locator)
 
         # Enable Bluetooth
         self.wait_for_element_displayed(*self._bluetooth_label_locator)
