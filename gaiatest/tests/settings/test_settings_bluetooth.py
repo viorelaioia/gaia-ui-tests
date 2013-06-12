@@ -9,7 +9,7 @@ class TestBluetoothSettings(GaiaTestCase):
 
     # Bluetooth settings locators
     _bluetooth_settings_locator = ('id', 'menuItem-bluetooth')
-    _bluetooth_region_visible_locator =('css selector', '#bluetooth.current')
+    _bluetooth_region_visible_locator = ('css selector', '#bluetooth.current')
     _bluetooth_checkbox_locator = ('css selector', '#bluetooth-status input')
     _bluetooth_label_locator = ('css selector', '#bluetooth-status span')
 
@@ -32,16 +32,15 @@ class TestBluetoothSettings(GaiaTestCase):
         bluetooth_menu_item = self.marionette.find_element(*self._bluetooth_settings_locator)
         bluetooth_menu_item.tap()
 
-        # wait for the Bluetooth region to be visible
-        self.wait_for_element_present(*self._bluetooth_region_visible_locator)
-
-        # Enable Bluetooth
-        self.wait_for_element_displayed(*self._bluetooth_label_locator)
         checkbox = self.marionette.find_element(*self._bluetooth_checkbox_locator)
+        self.wait_for_condition(lambda m: checkbox.location['x'] == 0)
         self.assertIsNone(checkbox.get_attribute('checked'))
 
-        self.marionette.find_element(*self._bluetooth_label_locator).tap()
+        # Enable Bluetooth
+        label = self.marionette.find_element(*self._bluetooth_label_locator)
+        label.tap()
         self.wait_for_condition(lambda m: m.find_element(*self._bluetooth_checkbox_locator).get_attribute('checked') == 'true')
+
         self.assertTrue(self.data_layer.get_setting('bluetooth.enabled'))
 
     def tearDown(self):
