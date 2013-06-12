@@ -184,12 +184,18 @@ class ToolBar(Base):
     def is_settings_visible(self):
         return self.is_element_displayed(*self._settings_locator)
 
+
 class Message(PageRegion):
     _subject_locator = ('css selector', '.msg-header-subject')
+    _senders_email_locator = ('css selector', '.msg-header-author')
 
     @property
     def subject(self):
         return self.root_element.find_element(*self._subject_locator).text
+
+    @property
+    def senders_email(self):
+        return self.root_element.find_element(*self._senders_email_locator).text
 
     def scroll_to_message(self):
         self.marionette.execute_script("arguments[0].scrollIntoView(false);", [self.root_element])

@@ -10,6 +10,7 @@ class ReadEmail(Base):
 
     _body_locator = ('css selector', '.card.center .msg-body-content')
     _subject_locator = ('css selector', '.card.center .msg-envelope-subject')
+    _senders_email_locator = ('css selector', '.msg-envelope-from-line div > span')
 
     @property
     def body(self):
@@ -18,3 +19,7 @@ class ReadEmail(Base):
     @property
     def subject(self):
         return self.marionette.find_element(*self._subject_locator).text
+
+    @property
+    def senders_email(self):
+        return self.marionette.find_element(*self._senders_email_locator).text
