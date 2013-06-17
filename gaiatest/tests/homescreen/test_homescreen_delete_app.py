@@ -42,9 +42,13 @@ class TestDeleteApp(GaiaTestCase):
         self.wait_for_element_displayed(*self._yes_button_locator)
         self.marionette.find_element(*self._yes_button_locator).tap()
 
-        # wait for the app to be installed and the notification banner to be available
-        self.wait_for_element_displayed(*self._notification_banner_locator)
-        self.wait_for_element_not_displayed(*self._notification_banner_locator)
+        # wait for the app to be installed by watching the notification banner
+        self.wait_for_condition(
+            lambda m: 'visible' in m.find_element(*self._notification_banner_locator).get_attribute('class')
+        )
+        self.wait_for_condition(
+            lambda m: 'visible' not in m.find_element(*self._notification_banner_locator).get_attribute('class')
+        )
 
         self.marionette.switch_to_frame(self.homescreen.frame)
 
