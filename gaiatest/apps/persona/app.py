@@ -18,7 +18,7 @@ class Persona(Base):
     _returning_button_locator = ('css selector', 'button.isReturning')
     _sign_in_button_locator = ('id', 'signInButton')
     _this_session_only_button_locator = ('id', 'this_is_not_my_computer')
-    _this_is_not_me_locator = ('css selector', 'p.isMobile .thisIsNotMe')
+    _this_is_not_me_locator = ('css selector', 'p.isMobile a.thisIsNotMe')
 
     _create_password_locator = ('id', 'password')
     _confirm_password_locator = ('id', 'vpassword')
