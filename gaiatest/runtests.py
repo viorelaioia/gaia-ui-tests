@@ -278,6 +278,3 @@ class GaiaTestRunner(MarionetteTestRunner):
 
 def main():
     cli(runner_class=GaiaTestRunner, parser_class=GaiaTestOptions)
-
-if __name__ == "__main__":
-    main()
