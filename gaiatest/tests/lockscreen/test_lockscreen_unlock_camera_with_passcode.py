@@ -12,6 +12,8 @@ class TestCameraUnlockWithPasscode(GaiaTestCase):
     _input_passcode = '7931'
 
     _camera_button_locator = ('id', 'lockscreen-area-camera')
+    _lockscreen_handle_locator = ('id', 'lockscreen-area-handle')
+    _lockscreen_icon_area_locator = ('id', 'lockscreen-icon-container')
 
     _camera_frame_locator = ('css selector', 'iframe[src^="./camera/index.html"]')
     _capture_button_locator = ('css selector', '#capture-button:not([disabled])')
@@ -22,22 +24,24 @@ class TestCameraUnlockWithPasscode(GaiaTestCase):
     def setUp(self):
         GaiaTestCase.setUp(self)
 
+        # Turn off geolocation prompt
+        self.apps.set_permission('System', 'geolocation', 'deny')
+
         self.data_layer.set_setting('lockscreen.passcode-lock.code', self._input_passcode)
         self.data_layer.set_setting('lockscreen.passcode-lock.enabled', True)
 
         # this time we need it locked!
         self.lockscreen.lock()
+        self.wait_for_element_displayed(*self._lockscreen_handle_locator)
 
     def test_unlock_to_camera_with_passcode(self):
         # https://github.com/mozilla/gaia-ui-tests/issues/479
 
-        # TODO: This currently does not work due to Touch failures,
-        # but this being a high priority test I am taking advantage of bug 813561 to tap the camera button
-        # self._swipe_and_unlock()
+        self._swipe_and_unlock()
 
         # Tap does not work here
         camera_button = self.marionette.find_element(*self._camera_button_locator)
-        camera_button.click()
+        camera_button.tap()
 
         self.wait_for_element_present(*self._camera_frame_locator)
         camera_frame = self.marionette.find_element(*self._camera_frame_locator)
@@ -62,12 +66,12 @@ class TestCameraUnlockWithPasscode(GaiaTestCase):
         unlock_handle_y_centre = int(unlock_handle.size['height'] / 2)
 
         # Get the end position from the demo animation
-        lockscreen_area = self.marionette.find_element(*self._lockscreen_area_locator)
-        end_animation_position = lockscreen_area.size['height'] - unlock_handle.size['height']
+        lockscreen_icon_area = self.marionette.find_element(*self._lockscreen_icon_area_locator)
+        end_animation_position = lockscreen_icon_area.size['height'] - unlock_handle.size['height']
 
         # Flick from unlock handle to (0, -end_animation_position) over 800ms duration
-        Actions(self.marionette).flick(unlock_handle, unlock_handle_x_centre, unlock_handle_y_centre, 0, 0 - end_animation_position, 800).perform()
+        Actions(self.marionette).flick(unlock_handle, unlock_handle_x_centre, unlock_handle_y_centre, 0, 0 - end_animation_position).perform()
 
         # Wait for the svg to animate and handle to disappear
         # TODO add assertion that unlock buttons are visible after bug 813561 is fixed
-        self.wait_for_condition(lambda m: not self.marionette.find_element(*self._lockscreen_handle_locator).is_displayed())
+        self.wait_for_condition(lambda m: not unlock_handle.is_displayed())
