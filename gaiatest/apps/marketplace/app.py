@@ -17,6 +17,7 @@ class Marketplace(Base):
     _error_title_locator = ('css selector', 'div.modal-dialog-message-container > h3.title')
     _error_message_locator = ('css selector', 'div.modal-dialog-message-container .message')
     _settings_button_locator = ('css selector', 'a.header-button.settings')
+    _home_button_locator = ('css selector', 'h1.site a')
     _notification_locator = ('id', 'notification-content')
 
     # Marketplace settings tabs
@@ -71,6 +72,24 @@ class Marketplace(Base):
         self.marionette.find_element(*self._settings_button_locator).tap()
         from gaiatest.apps.marketplace.regions.settings import Settings
         return Settings(self.marionette)
+
+    def tap_home(self):
+        self.marionette.find_element(*self._home_button_locator).tap()
+
+    def login(self, user):
+        # Tap settings and sign in in Marketplace
+        settings = self.tap_settings()
+        persona = settings.tap_sign_in()
+
+        # login with PersonaTestUser account
+        persona.login(user.email, user.password)
+
+        # switch back to Marketplace
+        self.marionette.switch_to_frame()
+        self.launch()
+
+        # wait for the page to refresh and the sign out button to be visible
+        settings.wait_for_sign_out_button()
 
     def wait_for_setting_displayed(self):
         self.wait_for_element_displayed(*self._settings_button_locator)
