@@ -25,7 +25,7 @@ class TestDialerAddContact(GaiaTestCase):
     _phone_field_locator = ('id', 'number_0')
 
     # Contact details panel
-    _contact_list_locator = ('css selector', '#contacts-list-G li')
+    _contact_list_locator = ('css selector', '#contacts-list-G li.contact-item > p > strong')
     _contact_name_title_locator = ('id', 'contact-name-title')
     _call_phone_number_button_locator = ('id', 'call-or-pick-0')
 
