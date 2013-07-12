@@ -25,40 +25,41 @@ class SearchResults(Base):
     def search_results(self):
         self.wait_for_element_displayed(*self._search_result_locator)
         search_results = self.marionette.find_elements(*self._search_result_locator)
-        return [self.Result(self.marionette, result) for result in search_results]
+        return [Result(self.marionette, result) for result in search_results]
 
-    class Result(PageRegion):
 
-        _name_locator = ('css selector', '.info > h3')
-        _author_locator = ('css selector', '.info .author')
-        _install_button_locator = ('css selector', '.button.product.install')
-        _price_locator = ('css selector', '.premium.button.product')
+class Result(PageRegion):
 
-        @property
-        def name(self):
-            return self.root_element.find_element(*self._name_locator).text
+    _name_locator = ('css selector', '.info > h3')
+    _author_locator = ('css selector', '.info .author')
+    _install_button_locator = ('css selector', '.button.product.install')
+    _price_locator = ('css selector', '.premium.button.product')
 
-        @property
-        def author(self):
-            return self.root_element.find_element(*self._author_locator).text
+    @property
+    def name(self):
+        return self.root_element.find_element(*self._name_locator).text
 
-        @property
-        def install_button_text(self):
-            return self.root_element.find_element(*self._install_button_locator).text
+    @property
+    def author(self):
+        return self.root_element.find_element(*self._author_locator).text
 
-        def tap_install_button(self):
-            self.root_element.find_element(*self._install_button_locator).tap()
-            self.marionette.switch_to_frame()
+    @property
+    def install_button_text(self):
+        return self.root_element.find_element(*self._install_button_locator).text
 
-        @property
-        def price(self):
-            return self.root_element.find_element(*self._price_locator).text
+    def tap_install_button(self):
+        self.root_element.find_element(*self._install_button_locator).tap()
+        self.marionette.switch_to_frame()
 
-        def tap_app(self):
-            app_name = self.marionette.find_element(*self._name_locator)
-            app_name.tap()
-            from gaiatest.apps.marketplace.regions.app_details import Details
-            return Details(self.marionette)
+    @property
+    def price(self):
+        return self.root_element.find_element(*self._price_locator).text
+
+    def tap_app(self):
+        app_name = self.marionette.find_element(*self._name_locator)
+        app_name.tap()
+        from gaiatest.apps.marketplace.regions.app_details import Details
+        return Details(self.marionette)
 
 
 class FilterResults(Base):
