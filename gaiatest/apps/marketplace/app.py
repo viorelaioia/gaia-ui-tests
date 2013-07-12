@@ -13,12 +13,14 @@ class Marketplace(Base):
 
     _marketplace_iframe_locator = ('css selector', 'iframe[src*="marketplace"]')
 
+    _gallery_apps_locator = ('css selector', '#gallery .app')
     _loading_fragment_locator = ('css selector', 'div.loading-fragment')
     _error_title_locator = ('css selector', 'div.modal-dialog-message-container > h3.title')
     _error_message_locator = ('css selector', 'div.modal-dialog-message-container .message')
     _settings_button_locator = ('css selector', 'a.header-button.settings')
     _home_button_locator = ('css selector', 'h1.site a')
     _notification_locator = ('id', 'notification-content')
+    _popular_apps_tab_locator = ('css selector', '#gallery .tabs a:nth-child(1)')
 
     # Marketplace settings tabs
     _account_tab_locator = ('css selector', 'a[href="/settings"]')
@@ -59,6 +61,12 @@ class Marketplace(Base):
     def notification_message(self):
         return self.marionette.find_element(*self._notification_locator).text
 
+    @property
+    def popular_apps(self):
+        self.show_popular_apps()
+        from gaiatest.apps.marketplace.regions.search_results import Result
+        return [Result(self.marionette, app) for app in self.marionette.find_elements(*self._gallery_apps_locator)]
+
     def search(self, term):
         search_box = self.marionette.find_element(*self._search_locator)
 
@@ -67,6 +75,10 @@ class Marketplace(Base):
         search_box.send_keys(Keys.RETURN)
         from gaiatest.apps.marketplace.regions.search_results import SearchResults
         return SearchResults(self.marionette)
+
+    def show_popular_apps(self):
+        self.marionette.find_element(*self._popular_apps_tab_locator).tap()
+        self.wait_for_condition(lambda m: 'active' in m.find_element(*self._popular_apps_tab_locator).get_attribute('class'))
 
     def tap_settings(self):
         self.marionette.find_element(*self._settings_button_locator).tap()
