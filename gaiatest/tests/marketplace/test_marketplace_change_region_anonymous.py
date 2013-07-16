@@ -4,10 +4,9 @@
 
 from gaiatest import GaiaTestCase
 from gaiatest.apps.marketplace.app import Marketplace
-from gaiatest.mocks.persona_test_user import PersonaTestUser
 
 
-class TestMarketplaceChangeUserRegion(GaiaTestCase):
+class TestMarketplaceChangeRegionAnonymous(GaiaTestCase):
 
     _REGION = 'Spain'
 
@@ -17,18 +16,12 @@ class TestMarketplaceChangeUserRegion(GaiaTestCase):
         self.connect_to_network()
         self.install_marketplace()
 
-        # generate unverified PersonaTestUser account
-        self.user = PersonaTestUser().create_user(verified=True, env={
-            "browserid": "firefoxos.persona.org",
-            "verifier": "marketplace-dev.allizom.org"})
-
-    def test_marketplace_change_user_region(self):
+    def test_marketplace_change_region_anonymous(self):
 
         marketplace = Marketplace(self.marionette, 'Marketplace Dev')
         marketplace.launch()
 
-        # login to marketplace
-        settings = marketplace.login(self.user)
+        settings = marketplace.tap_settings()
 
         # change region
         settings.select_region(self._REGION)
