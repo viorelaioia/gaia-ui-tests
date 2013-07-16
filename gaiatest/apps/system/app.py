@@ -27,7 +27,7 @@ class System(Base):
         self.wait_for_condition(lambda m: m.find_element(*self._notification_toaster_locator).location['y'] == -50)
 
     def open_utility_tray(self):
-        # Use actions for this
+        # TODO Use actions for this
         self.marionette.execute_script("window.wrappedJSObject.UtilityTray.show()")
 
         from gaiatest.apps.system.regions.utility_tray import UtilityTray
