@@ -34,14 +34,13 @@ class TestNotificationBar(GaiaTestCase):
         self.assertEqual(1, len(notifications), 'Expected one notification.')
 
         # Assert notification is listed in notifications-container
-        self.assertEqual(self._notification_body, notifications[0].body,
-                         'The notification body should be "%s", not "%s".' % (self._notification_body, notifications[0].body))
+        self.assertEqual(self._notification_body, notifications[0].content)
 
         # Clear the notification by "Clear all"
-        utility_tray.tap_clear_all()
+        utility_tray.clear_all_notifications()
 
         # wait for the notifications to be cleared
         self.wait_for_condition(lambda m: len(utility_tray.notifications) == 0)
 
         # Assert there is no notification is listed in notifications-container
-        self.assertEqual(0, len(utility_tray.notifications), 'Expected 0 notifications. Found %s notifications' % len(utility_tray.notifications))
+        self.assertEqual(0, len(utility_tray.notifications))

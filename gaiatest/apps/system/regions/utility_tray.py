@@ -20,7 +20,7 @@ class UtilityTray(Base):
         return [Notification(self.marionette, notification)
                 for notification in self.marionette.find_elements(*self._desktop_notifications_locator)]
 
-    def tap_clear_all(self):
+    def clear_all_notifications(self):
         self.marionette.find_element(*self._notification_clear_locator).tap()
 
 
@@ -28,5 +28,5 @@ class Notification(PageRegion):
     _body_locator = ('css selector', 'div.detail')
 
     @property
-    def body(self):
+    def content(self):
         return self.root_element.find_element(*self._body_locator).text
