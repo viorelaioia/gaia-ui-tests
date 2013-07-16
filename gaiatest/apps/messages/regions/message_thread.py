@@ -12,7 +12,7 @@ class MessageThread(Base):
     _received_message_content_locator = ('css selector', "#messages-container li.message.received")
 
     def wait_for_received_messages(self):
-        self.wait_for_element_displayed(*self._received_message_content_locator)
+        self.wait_for_element_displayed(*self._received_message_content_locator, timeout=180)
 
     @property
     def received_messages(self):
