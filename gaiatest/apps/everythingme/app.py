@@ -35,7 +35,7 @@ class EverythingMe(Base):
         search_input = self.marionette.find_element(*self._search_box_locator)
         search_input.clear()
         search_input.send_keys(text_to_type)
-        search_input.click()
+        search_input.tap()
 
     def wait_for_search_tips_displayed(self):
         self.wait_for_element_displayed(*self._search_tips_locator)
@@ -113,6 +113,9 @@ class EverythingMeApp(PageRegion):
         self.marionette.switch_to_frame()
         app_iframe = self.wait_for_element_present(*_app_iframe_locator)
         self.marionette.switch_to_frame(app_iframe)
+
+        # wait for app to launch
+        self.wait_for_condition(lambda m: m.title)
 
     def tap_to_install(self):
         Actions(self.marionette).long_press(self.root_element, 2).perform()
