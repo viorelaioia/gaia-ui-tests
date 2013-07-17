@@ -19,6 +19,7 @@ class NewMessage(Base):
         self.wait_for_condition(lambda m: section.location['x'] == 0)
 
     def type_phone_number(self, value):
+        self.wait_for_element_displayed(*self._receiver_input_locator)
         contact_field = self.marionette.find_element(*self._receiver_input_locator)
         contact_field.send_keys(value)
 
