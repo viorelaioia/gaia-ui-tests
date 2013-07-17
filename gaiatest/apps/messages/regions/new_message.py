@@ -10,7 +10,7 @@ class NewMessage(Base):
     _receiver_input_locator = ('css selector', '#messages-recipients-list span.recipient')
     _message_field_locator = ('id', 'messages-input')
     _send_message_button_locator = ('id', 'messages-send-button')
-    _message_sending_spinner_locator = ('css selector', "img[src='style/images/spinningwheel_small_animation.gif']")
+    _message_sending_locator = ('css selector', "li.message.outgoing.sending")
     _thread_messages_locator = ('id', 'thread-messages')
 
     def __init__(self, marionette):
@@ -32,6 +32,6 @@ class NewMessage(Base):
 
     def tap_send(self):
         self.marionette.find_element(*self._send_message_button_locator).tap()
-        self.wait_for_element_not_present(*self._message_sending_spinner_locator, timeout=120)
+        self.wait_for_element_not_present(*self._message_sending_locator, timeout=120)
         from gaiatest.apps.messages.regions.message_thread import MessageThread
         return MessageThread(self.marionette)
