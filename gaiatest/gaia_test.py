@@ -469,6 +469,7 @@ class GaiaTestCase(MarionetteTestCase):
 
         # Change timezone back to PST
         self.data_layer.set_setting("time.timezone", "America/Los_Angeles")
+        self.data_layer.set_setting("time.timezone.user-selected", "America/Los_Angeles")
 
         # restore settings from testvars
         [self.data_layer.set_setting(name, value) for name, value in self.testvars.get('settings', {}).items()]
