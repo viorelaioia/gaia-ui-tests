@@ -28,9 +28,7 @@ class TestMarketplaceChangeUserRegion(GaiaTestCase):
         marketplace.launch()
 
         # login to marketplace
-        marketplace.login(self.user)
-
-        settings = marketplace.tap_settings()
+        settings = marketplace.login(self.user)
 
         # change region
         settings.select_region(self._REGION)
@@ -43,7 +41,7 @@ class TestMarketplaceChangeUserRegion(GaiaTestCase):
         self.assertEqual(marketplace.notification_message, 'Settings saved')
 
         # go to home
-        marketplace.tap_home()
+        marketplace.tap_back()
 
         # go back to settings
         settings = marketplace.tap_settings()
