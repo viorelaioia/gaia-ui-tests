@@ -28,6 +28,11 @@ class Contacts(Base):
         return [self.Contact(marionette=self.marionette, element=contact)
                 for contact in self.marionette.find_elements(*self._contact_locator)]
 
+    @property
+    def new_contact(self):
+        from gaiatest.apps.contacts.regions.contact_form import NewContact
+        return NewContact(self.marionette)
+
     def contact(self, name):
         for contact in self.contacts:
             if contact.name == name:

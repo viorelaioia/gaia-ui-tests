@@ -13,12 +13,25 @@ class Phone(Base):
     _dialog_locator = ('id', 'confirmation-message')
     _dialog_title_locator = ('xpath', "//*[@id='confirmation-message']/section/h1")
     _call_log_toolbar_button_locator = ('id', 'option-recents')
+    _contacts_view_locator = ('id', 'option-contacts')
     _keypad_toolbar_button_locator = ('id', 'option-keypad')
+
+    _contacts_frame_locator = ('css selector', '#iframe-contacts')
 
     @property
     def keypad(self):
         from gaiatest.apps.phone.regions.keypad import Keypad
         return Keypad(self.marionette)
+
+    def tap_contacts(self):
+        self.marionette.find_element(*self._contacts_view_locator).tap()
+
+        self.wait_for_element_present(*self._contacts_frame_locator)
+        frame = self.marionette.find_element(*self._contacts_frame_locator)
+        self.marionette.switch_to_frame(frame)
+
+        from gaiatest.apps.contacts.app import Contacts
+        return Contacts(self.marionette)
 
     @property
     def call_screen(self):
