@@ -19,6 +19,7 @@ class Marketplace(Base):
     _error_message_locator = ('css selector', 'div.modal-dialog-message-container .message')
     _settings_button_locator = ('css selector', 'a.header-button.settings')
     _home_button_locator = ('css selector', 'h1.site a')
+    _back_button_locator = ('id', 'nav-back')
     _notification_locator = ('id', 'notification-content')
     _popular_apps_tab_locator = ('css selector', '#gallery .tabs a:nth-child(1)')
 
@@ -88,6 +89,9 @@ class Marketplace(Base):
     def tap_home(self):
         self.marionette.find_element(*self._home_button_locator).tap()
 
+    def tap_back(self):
+        self.marionette.find_element(*self._back_button_locator).tap()
+
     def login(self, user):
         # Tap settings and sign in in Marketplace
         settings = self.tap_settings()
@@ -102,6 +106,8 @@ class Marketplace(Base):
 
         # wait for the page to refresh and the sign out button to be visible
         settings.wait_for_sign_out_button()
+
+        return settings
 
     def wait_for_setting_displayed(self):
         self.wait_for_element_displayed(*self._settings_button_locator)
