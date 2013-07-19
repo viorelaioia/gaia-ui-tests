@@ -21,8 +21,8 @@ class Base(object):
         self.apps = GaiaApps(self.marionette)
         self.frame = None
 
-    def launch(self):
-        self.app = self.apps.launch(self.name)
+    def launch(self, launch_timeout=None):
+        self.app = self.apps.launch(self.name, launch_timeout=launch_timeout)
 
     def wait_for_element_present(self, by, locator, timeout=_default_timeout):
         timeout = float(timeout) + time.time()

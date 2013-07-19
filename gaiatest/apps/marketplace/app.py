@@ -44,7 +44,10 @@ class Marketplace(Base):
         self.marionette.switch_to_frame(self.marionette.find_element(*self._marketplace_iframe_locator))
 
     def launch(self):
-        Base.launch(self)
+        launch_timeout = None
+        if self.name == "Marketplace Dev":
+            launch_timeout = 120000
+        Base.launch(self, launch_timeout=launch_timeout)
         self.wait_for_element_not_displayed(*self._loading_fragment_locator)
 
     @property

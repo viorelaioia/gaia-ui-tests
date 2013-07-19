@@ -69,9 +69,9 @@ class GaiaApps(object):
         return self.marionette.execute_async_script("return GaiaApps.setPermission('%s', '%s', '%s')" %
                                                     (app_name, permission_name, value))
 
-    def launch(self, name, switch_to_frame=True, url=None):
+    def launch(self, name, switch_to_frame=True, url=None, launch_timeout=None):
         self.marionette.switch_to_frame()
-        result = self.marionette.execute_async_script("GaiaApps.launchWithName('%s')" % name)
+        result = self.marionette.execute_async_script("GaiaApps.launchWithName('%s')" % name, script_timeout=launch_timeout)
         assert result, "Failed to launch app with name '%s'" % name
         app = GaiaApp(frame=result.get('frame'),
                       src=result.get('src'),
