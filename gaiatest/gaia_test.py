@@ -15,6 +15,7 @@ from marionette.errors import NoSuchElementException
 from marionette.errors import ElementNotVisibleException
 from marionette.errors import TimeoutException
 from marionette.errors import StaleElementException
+from marionette.errors import InvalidResponseException
 import mozdevice
 
 
@@ -315,8 +316,9 @@ class GaiaData(object):
 
 class GaiaDevice(object):
 
-    def __init__(self, marionette):
+    def __init__(self, marionette, testvars):
         self.marionette = marionette
+        self.testvars = testvars
 
     @property
     def manager(self):
@@ -340,9 +342,9 @@ class GaiaDevice(object):
 
     @property
     def is_android_build(self):
-        if not hasattr(self, '_is_android_build'):
-            self._is_android_build = 'Android' in self.marionette.session_capabilities['platform']
-        return self._is_android_build
+        if self.testvars.get('is_android_build') is None:
+            self.testvars['is_android_build'] = 'Android' in self.marionette.session_capabilities['platform']
+        return self.testvars['is_android_build']
 
     @property
     def is_online(self):
@@ -424,9 +426,13 @@ class GaiaTestCase(MarionetteTestCase):
         MarionetteTestCase.__init__(self, *args, **kwargs)
 
     def setUp(self):
-        MarionetteTestCase.setUp(self)
+        try:
+            MarionetteTestCase.setUp(self)
+        except InvalidResponseException:
+            if self.restart:
+                pass
 
-        self.device = GaiaDevice(self.marionette)
+        self.device = GaiaDevice(self.marionette, self.testvars)
         if self.restart and (self.device.is_android_build or self.marionette.instance):
             self.device.stop_b2g()
             if self.device.is_android_build:
