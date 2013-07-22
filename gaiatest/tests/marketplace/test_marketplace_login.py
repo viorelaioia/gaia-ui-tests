@@ -53,6 +53,4 @@ class TestMarketplaceLogin(GaiaTestCase):
         settings.tap_sign_out()
 
         # Verify that user is signed out
-        self.marketplace.wait_for_setting_displayed()
-        settings = self.marketplace.tap_settings()
         settings.wait_for_sign_in_displayed()
