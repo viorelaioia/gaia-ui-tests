@@ -4,6 +4,7 @@
 
 import time
 from marionette.marionette import Actions
+from gaiatest.apps.base import Base
 from gaiatest.apps.phone.app import Phone
 from gaiatest.apps.phone.regions.call_screen import CallScreen
 
@@ -14,6 +15,7 @@ class Keypad(Phone):
     _keyboard_container_locator = ('id', 'keyboard-container')
     _phone_number_view_locator = ('id', 'phone-number-view')
     _call_bar_locator = ('id', 'keypad-callbar-call-action')
+    _add_new_contact_button_locator = ('id', 'keypad-callbar-add-contact')
 
     def __init__(self, marionette):
         Phone.__init__(self, marionette)
@@ -40,3 +42,27 @@ class Keypad(Phone):
         self.marionette.find_element(*self._call_bar_locator).tap()
         if switch_to_call_screen:
             return CallScreen(self.marionette)
+
+    def tap_add_contact(self):
+        self.marionette.find_element(*self._add_new_contact_button_locator).tap()
+        return AddNewNumber(self.marionette)
+
+
+class AddNewNumber(Base):
+    _create_new_contact_locator = ('id', 'create-new-contact-menuitem')
+    _new_contact_frame_locator = ('css selector', "iframe[src^='app://communications'][src$='contacts/index.html?new']")
+
+    def __init__(self, marionette):
+        Base.__init__(self, marionette)
+        self.wait_for_element_displayed(*self._create_new_contact_locator)
+
+    def tap_create_new_contact(self):
+        self.marionette.find_element(*self._create_new_contact_locator).tap()
+
+        self.marionette.switch_to_frame()
+        self.wait_for_element_present(*self._new_contact_frame_locator)
+        frame = self.marionette.find_element(*self._new_contact_frame_locator)
+        self.marionette.switch_to_frame(frame)
+
+        from gaiatest.apps.contacts.regions.contact_form import NewContact
+        return NewContact(self.marionette)
