@@ -38,6 +38,6 @@ class BluetoothHost():
                 continue
             else:
                 if any(device_to_find in next_item for next_item in nearby_devices):
-                    device_found = True;
-                    break;
+                    device_found = True
+                    break
         return device_found

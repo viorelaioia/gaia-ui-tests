@@ -206,7 +206,7 @@ class GaiaData(object):
         assert result, "Unable to set device's bluetooth name to %s" % device_name
 
     def bluetooth_set_device_discoverable_mode(self, discoverable):
-        if (discoverable == True):
+        if (discoverable):
             result = self.marionette.execute_async_script('return GaiaDataLayer.bluetoothSetDeviceDiscoverableMode(true);')
         else:
             result = self.marionette.execute_async_script('return GaiaDataLayer.bluetoothSetDeviceDiscoverableMode(false);')
