@@ -44,6 +44,8 @@ class TestFtu(GaiaTestCase):
         # launch the First Time User app
         self.app = self.apps.launch('FTU')
 
+        self.wait_for_condition(lambda m: self.data_layer.is_wifi_enabled)
+
     def test_ftu_with_tour(self):
 
         # Go through the FTU setup as quickly as possible to get to the Tour section
