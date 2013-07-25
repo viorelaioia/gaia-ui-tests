@@ -23,7 +23,7 @@ class TestEverythingMeInstallApp(GaiaTestCase):
 
         self.everythingme.go_to_everything_me()
 
-        self.everythingme.wait_for_categories_present()
+        self.everythingme.wait_for_categories_to_load()
         self.assertGreater(self.everythingme.categories_count, 0, 'No shortcut categories found')
         self.everythingme.categories[0].tap()
 

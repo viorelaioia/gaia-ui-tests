@@ -16,13 +16,15 @@ class TestEverythingMeSearch(GaiaTestCase):
         self.everythingme = EverythingMe(self.marionette)
 
     def test_launch_everything_me_search(self):
+        # Tests a search with a common string.
+        # Asserts that the title and shortcuts are listed
+
+        test_string = u'skyfall'
         self.everythingme.go_to_everything_me()
 
         self.everythingme.wait_for_search_box_displayed()
-        self.everythingme.type_into_search_box(u'skyfall')
-        self.everythingme.wait_for_search_tips_displayed()
-        self.everythingme.tap_search_tip()
+        self.everythingme.type_into_search_box(test_string)
+        self.assertIn(test_string, self.everythingme.search_title)
 
-        self.everythingme.wait_for_categories_present()
+        self.everythingme.wait_for_categories_to_load()
         self.assertGreater(self.everythingme.categories_count, 0, 'No shortcut categories found')
-        self.keyboard.tap_enter()
