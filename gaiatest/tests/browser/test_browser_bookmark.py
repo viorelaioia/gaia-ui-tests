@@ -45,10 +45,10 @@ class TestBrowserBookmark(GaiaTestCase):
 
         # check whether bookmark was added
         while self._homescreen_has_more_pages:
+            self._go_to_next_page()
             if self.is_element_displayed(*self._homescreen_icon_locator):
                 self._bookmark_added = True
                 break
-            self._go_to_next_page()
 
         self.assertTrue(self._bookmark_added, 'The bookmark %s was not found to be installed on the home screen.' % self.bookmark_title)
 
