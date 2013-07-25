@@ -3,6 +3,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from marionette.marionette import Actions
+from marionette.keys import Keys
 
 from gaiatest.apps.base import Base
 from gaiatest.apps.base import PageRegion
@@ -15,7 +16,8 @@ class EverythingMe(Base):
 
     # Everything.Me locators
     _search_box_locator = ('id', 'search-q')
-    _search_tips_locator = ('css selector', '#helper ul:not(.anim) li[data-index]')
+    _search_title_locator = ('id', 'search-title')
+    _loading_apps_locator = ('css selector', 'div.loading-apps')
     _category_item_locator = ('css selector', '#shortcuts-items li[data-query]')
     _app_icon_locator = ('css selector', 'li.cloud[data-name]')
 
@@ -35,17 +37,15 @@ class EverythingMe(Base):
         search_input = self.marionette.find_element(*self._search_box_locator)
         search_input.clear()
         search_input.send_keys(text_to_type)
-        search_input.tap()
+        search_input.send_keys(Keys.RETURN)
 
-    def wait_for_search_tips_displayed(self):
-        self.wait_for_element_displayed(*self._search_tips_locator)
+    @property
+    def search_title(self):
+        self.wait_for_element_displayed(*self._search_title_locator)
+        return self.marionette.find_element(*self._search_title_locator).text
 
-    def tap_search_tip(self):
-        """Taps on first search tip displayed"""
-        self.marionette.find_element(*self._search_tips_locator).tap()
-
-    def wait_for_categories_present(self):
-        self.wait_for_element_present(*self._category_item_locator)
+    def wait_for_categories_to_load(self):
+        self.wait_for_element_not_displayed(*self._loading_apps_locator)
 
     def tap_category(self, category_name):
         for category in self.categories:
