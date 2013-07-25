@@ -7,7 +7,6 @@ from marionette.marionette import Actions
 from gaiatest import GaiaTestCase
 
 
-
 class TestEverythingMeInstallApp(GaiaTestCase):
 
     app_installed = False
@@ -77,10 +76,10 @@ class TestEverythingMeInstallApp(GaiaTestCase):
 
         # check whether app is installed
         while self._homescreen_has_more_pages:
+            self._go_to_next_page()
             if self.is_element_displayed(self._homescreen_icon_locator[0], self._homescreen_icon_locator[1] % self.first_app_name):
                 self.app_installed = True
                 break
-            self._go_to_next_page()
 
         self.assertTrue(self.app_installed, 'The app %s was not found to be installed on the home screen.' % self.first_app_name)
 
