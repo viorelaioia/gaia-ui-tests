@@ -20,6 +20,7 @@ class Camera(Base):
     _filmstrip_locator = ('id', 'filmstrip')
     _focus_ring_locator = ('id', 'focus-ring')
     _body_locator = ('tag name', 'body')
+    _gallery_button_locator = ('id', 'gallery-button')
 
     def launch(self):
         Base.launch(self)
@@ -75,6 +76,10 @@ class Camera(Base):
     def video_timer(self):
         text = self.marionette.find_element(*self._video_timer_locator).text
         return time.strptime(text, '%M:%S')
+
+    @property
+    def is_gallery_button_visible(self):
+        return self.is_element_displayed(*self._gallery_button_locator)
 
     @property
     def filmstrip_images(self):
