@@ -3,6 +3,8 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+from marionette.keys import Keys
+
 from gaiatest import GaiaTestCase
 
 
@@ -11,20 +13,24 @@ class TestEverythingMeSearchAccented(GaiaTestCase):
     # Everything.Me locators
     _shortcut_items_locator = ('css selector', '#shortcuts-items li')
     _search_box_locator = ('id', 'search-q')
-    _search_tips_locator = ('css selector', '#helper ul:not(.anim) li[data-index]')
+    _search_title_locator = ('id', 'search-title')
+    _loading_apps_locator = ('css selector', 'div.loading-apps')
 
     # Homescreen locators
     _homescreen_frame_locator = ('css selector', 'div.homescreen > iframe')
 
     # Search string
     _test_string = u"Özdemir Erdoğan"
+    _test_string_encoded = u'\xd6zdemir Erdo\u011fan'
 
     def setUp(self):
         GaiaTestCase.setUp(self)
         self.apps.set_permission('Homescreen', 'geolocation', 'deny')
         self.connect_to_network()
 
-    def test_launch_everything_me_search(self):
+    def test_launch_everything_me_search_accented(self):
+        # This test does a search with accented characters and asserts the
+        # title and shortcut results are returned correctly.
 
         # swipe to Everything.Me
         hs_frame = self.marionette.find_element(*self._homescreen_frame_locator)
@@ -42,15 +48,15 @@ class TestEverythingMeSearchAccented(GaiaTestCase):
 
         # Enter the string to search
         search_input.send_keys(self._test_string)
-        search_input.click()
+        search_input.send_keys(Keys.RETURN)
 
-        # Wait for the search suggestions and then tap on the first one
-        self.wait_for_condition(lambda m: len(m.find_elements(*self._search_tips_locator)) > 0)
-        self.wait_for_element_displayed(*self._search_tips_locator)
-        self.marionette.find_element(*self._search_tips_locator).tap()
+        # Wait for the title to appear and assert it
+        self.wait_for_element_displayed(*self._search_title_locator)
+        title_text = self.marionette.find_element(*self._search_title_locator).text
+        self.assertIn(self._test_string_encoded.lower(), title_text)
 
-        # Wait for the apps to appear
-        self.wait_for_element_present(*self._shortcut_items_locator)
+        # Check that shortcuts are present. Loading spinner may still be showing
+        self.wait_for_element_not_displayed(*self._loading_apps_locator)
+
         shortcuts = self.marionette.find_elements(*self._shortcut_items_locator)
         self.assertGreater(len(shortcuts), 0, 'No shortcut categories found')
-        self.keyboard.tap_enter()
