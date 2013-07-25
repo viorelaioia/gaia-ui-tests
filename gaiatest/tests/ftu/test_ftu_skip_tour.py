@@ -89,6 +89,8 @@ class TestFtu(GaiaTestCase):
         # launch the First Time User app
         self.app = self.apps.launch('FTU')
 
+        self.wait_for_condition(lambda m: self.data_layer.is_wifi_enabled)
+
     def create_language_locator(self, language):
         return ('css selector', "#languages ul li input[name='language.current'][value='%s'] ~ p" % language)
 

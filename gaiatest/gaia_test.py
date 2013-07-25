@@ -242,7 +242,7 @@ class GaiaData(object):
 
     @property
     def is_wifi_enabled(self):
-        return self.get_setting('wifi.enabled')
+        return self.marionette.execute_script("return window.navigator.mozWifiManager.enabled;")
 
     def enable_wifi(self):
         self.marionette.switch_to_frame()
