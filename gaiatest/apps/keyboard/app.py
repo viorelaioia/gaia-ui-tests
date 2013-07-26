@@ -77,7 +77,7 @@ class Keyboard(Base):
 
     # trying to switch to right layout
     def _switch_to_correct_layout(self, val):
-        #input_type = self.marionette.execute_script('return window.wrappedJSObject.currentInputType;')
+        input_type = self.marionette.execute_script('return window.wrappedJSObject.currentInputType;')
         layout_page = self.marionette.execute_script('return window.wrappedJSObject.layoutPage;')
         if val.isalpha():
             is_upper_case = self.marionette.execute_script('return window.wrappedJSObject.isUpperCase;')
@@ -87,7 +87,7 @@ class Keyboard(Base):
                 self._tap(self._upper_case_key)
         # numbers and symbols are in another keyboard
         else:
-            if layout_page == 'Default':
+            if not input_type == 'number' and layout_page == 'Default':
                 self._tap(self._numeric_sign_key)
             if not self.is_element_present(*self._key_locator(val)):
                 self._tap(self._alt_key)
