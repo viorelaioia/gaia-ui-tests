@@ -46,6 +46,7 @@ class EverythingMe(Base):
 
     def wait_for_categories_to_load(self):
         self.wait_for_element_not_displayed(*self._loading_apps_locator)
+        self.wait_for_element_displayed(*self._category_item_locator)
 
     def tap_category(self, category_name):
         for category in self.categories:
