@@ -3,8 +3,6 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-from marionette.keys import Keys
-
 from gaiatest import GaiaTestCase
 from gaiatest.apps.everythingme.app import EverythingMe
 
@@ -28,5 +26,5 @@ class TestEverythingMeSearchAccented(GaiaTestCase):
         self.everythingme.type_into_search_box(test_string)
         self.assertIn(test_string.lower(), self.everythingme.search_title)
 
-        self.everythingme.wait_for_categories_to_load()
-        self.assertGreater(self.everythingme.categories_count, 0, 'No shortcut categories found')
+        self.everythingme.wait_for_app_icons_displayed()
+        self.assertGreater(self.everythingme.apps_count, 0, 'No apps found')
