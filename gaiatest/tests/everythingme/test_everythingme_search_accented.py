@@ -26,5 +26,5 @@ class TestEverythingMeSearchAccented(GaiaTestCase):
         self.everythingme.type_into_search_box(test_string)
         self.assertIn(test_string.lower(), self.everythingme.search_title)
 
-        self.everythingme.wait_for_categories_to_load()
-        self.assertGreater(self.everythingme.categories_count, 0, 'No shortcut categories found')
+        self.everythingme.wait_for_app_icons_displayed()
+        self.assertGreater(self.everythingme.apps_count, 0, 'No apps found')

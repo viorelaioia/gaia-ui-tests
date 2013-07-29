@@ -69,6 +69,10 @@ class EverythingMe(Base):
         self.wait_for_element_displayed(*self._app_icon_locator)
 
     @property
+    def apps_count(self):
+        return len(self.marionette.find_elements(*self._app_icon_locator))
+
+    @property
     def app_icons(self):
         return [EverythingMeApp(self.marionette, root_el) for root_el in
                 self.marionette.find_elements(*self._app_icon_locator)]
