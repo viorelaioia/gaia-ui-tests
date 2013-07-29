@@ -42,11 +42,11 @@ class TestEverythingMeInstallApp(GaiaTestCase):
         is_installed = False
         while self._homescreen_has_more_pages:
             self._go_to_next_page()
-            if self.is_element_displayed(self._homescreen_icon_locator[0], self._homescreen_icon_locator[1] % self.first_app_name):
-                self.app_installed = True
+            if self.is_element_displayed(self._homescreen_icon_locator[0], self._homescreen_icon_locator[1] % app_name):
+                is_installed = True
                 break
 
-        self.assertTrue(self.app_installed, 'The app %s was not found to be installed on the home screen.' % self.first_app_name)
+        return is_installed
 
     def _go_to_next_page(self):
         self.marionette.execute_script('window.wrappedJSObject.GridManager.goToNextPage()')
