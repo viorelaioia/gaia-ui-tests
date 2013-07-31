@@ -82,10 +82,6 @@ class TestFtu(GaiaTestCase):
     def setUp(self):
         GaiaTestCase.setUp(self)
 
-        # We need WiFi enabled but not connected to a network
-        self.data_layer.enable_wifi()
-        self.data_layer.forget_all_networks()
-
         # launch the First Time User app
         self.app = self.apps.launch('FTU')
 
@@ -230,13 +226,6 @@ class TestFtu(GaiaTestCase):
         # Switch back to top level now that FTU app is gone
         self.marionette.switch_to_frame()
 
-    def tearDown(self):
-
-        # TODO flush any settings set by the FTU app
-
-        self.data_layer.disable_wifi()
-
-        GaiaTestCase.tearDown(self)
 
     def _select(self, match_string):
         # Cheeky Select wrapper until Marionette has its own
