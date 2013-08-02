@@ -28,6 +28,9 @@ class Contacts(Base):
         return [self.Contact(marionette=self.marionette, element=contact)
                 for contact in self.marionette.find_elements(*self._contact_locator)]
 
+    def wait_for_contacts(self, number_to_wait_for=1):
+        self.wait_for_condition(lambda m: len(m.find_elements(*self._contact_locator)) == number_to_wait_for)
+
     @property
     def new_contact(self):
         from gaiatest.apps.contacts.regions.contact_form import NewContact
