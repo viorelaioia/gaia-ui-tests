@@ -12,6 +12,7 @@ class System(Base):
     _status_bar_notification_locator = ('id', 'statusbar-notification')
 
     _notification_toaster_locator = ('id', 'notification-toaster')
+    _update_manager_toaster_locator = ('id', 'update-manager-toaster')
 
     def wait_for_status_bar_displayed(self):
         self.wait_for_element_displayed(*self._status_bar_locator)
@@ -32,3 +33,14 @@ class System(Base):
 
         from gaiatest.apps.system.regions.utility_tray import UtilityTray
         return UtilityTray(self.marionette)
+
+    # As we have trouble disabling the app update toaster these methods
+    # may be used to wait for it when we know it may interfere
+    @property
+    def is_app_update_notification_displayed(self):
+        update_manager_toaster = self.marionette.find_element(*self._update_manager_toaster_locator)
+        return update_manager_toaster.location['y'] > (0 - update_manager_toaster.size['height'])
+
+    def wait_for_app_update_to_clear(self):
+        update_manager_toaster = self.marionette.find_element(*self._update_manager_toaster_locator)
+        self.wait_for_condition(lambda m: update_manager_toaster.location['y'] == (0 - update_manager_toaster.size['height']))

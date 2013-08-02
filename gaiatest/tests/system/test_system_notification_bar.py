@@ -36,6 +36,10 @@ class TestNotificationBar(GaiaTestCase):
         # Assert notification is listed in notifications-container
         self.assertEqual(self._notification_body, notifications[0].content)
 
+        # We cannot disable app update yet so let's wait for it to pass
+        if system.is_app_update_notification_displayed:
+            system.wait_for_app_update_to_clear()
+
         # Clear the notification by "Clear all"
         utility_tray.clear_all_notifications()
 
