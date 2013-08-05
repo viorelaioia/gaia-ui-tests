@@ -2,14 +2,16 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+from marionette.by import By
+
 from gaiatest import GaiaTestCase
 from gaiatest.apps.browser.app import Browser
 
 
 class TestBrowserBookmark(GaiaTestCase):
 
-    _homescreen_frame_locator = ('css selector', 'div.homescreen > iframe')
-    _homescreen_icon_locator = ('css selector', 'li.icon[aria-label="%s"]')
+    _homescreen_frame_locator = (By.CSS_SELECTOR, 'div.homescreen > iframe')
+    _homescreen_icon_locator = (By.CSS_SELECTOR, 'li.icon[aria-label="%s"]')
     _bookmark_added = False
 
     def setUp(self):
