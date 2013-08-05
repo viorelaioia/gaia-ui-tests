@@ -2,6 +2,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+from marionette.by import By
 from marionette.marionette import Actions
 from marionette.keys import Keys
 
@@ -12,14 +13,14 @@ from gaiatest.apps.base import PageRegion
 class EverythingMe(Base):
 
     # Homescreen locators
-    _homescreen_frame_locator = ('css selector', 'div.homescreen > iframe')
+    _homescreen_frame_locator = (By.CSS_SELECTOR, 'div.homescreen > iframe')
 
     # Everything.Me locators
-    _search_box_locator = ('id', 'search-q')
-    _search_title_locator = ('id', 'search-title')
-    _loading_apps_locator = ('css selector', 'div.loading-apps')
-    _category_item_locator = ('css selector', '#shortcuts-items li[data-query]')
-    _app_icon_locator = ('css selector', 'li.cloud[data-name]')
+    _search_box_locator = (By.ID, 'search-q')
+    _search_title_locator = (By.ID, 'search-title')
+    _loading_apps_locator = (By.CSS_SELECTOR, 'div.loading-apps')
+    _category_item_locator = (By.CSS_SELECTOR, '#shortcuts-items li[data-query]')
+    _app_icon_locator = (By.CSS_SELECTOR, 'li.cloud[data-name]')
 
     def go_to_everything_me(self):
         # Move this into the homescreen app when it is created
@@ -98,11 +99,11 @@ class EverythingMeCategory(PageRegion):
 
 class EverythingMeApp(PageRegion):
 
-    _app_iframe_locator = ('css selector', 'iframe[data-origin-name="%s"]')
+    _app_iframe_locator = (By.CSS_SELECTOR, 'iframe[data-origin-name="%s"]')
 
     # Modal dialog locators
-    _modal_dialog_message_locator = ('id', 'modal-dialog-confirm-message')
-    _modal_dialog_ok_locator = ('id', 'modal-dialog-confirm-ok')
+    _modal_dialog_message_locator = (By.ID, 'modal-dialog-confirm-message')
+    _modal_dialog_ok_locator = (By.ID, 'modal-dialog-confirm-ok')
 
     @property
     def name(self):
