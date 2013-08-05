@@ -2,20 +2,21 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-from gaiatest.apps.base import Base
+from marionette.by import By
 from marionette.marionette import Actions
+from gaiatest.apps.base import Base
 
 
 class LockScreen(Base):
 
-    _lockscreen_locator = ('id', 'lockscreen')
-    _lockscreen_icon_area_locator = ('id', 'lockscreen-icon-container')
+    _lockscreen_locator = (By.ID, 'lockscreen')
+    _lockscreen_icon_area_locator = (By.ID, 'lockscreen-icon-container')
 
-    _lockscreen_handle_locator = ('id', 'lockscreen-area-handle')
-    _unlock_button_locator = ('id', 'lockscreen-area-unlock')
-    _camera_button_locator = ('id', 'lockscreen-area-camera')
+    _lockscreen_handle_locator = (By.ID, 'lockscreen-area-handle')
+    _unlock_button_locator = (By.ID, 'lockscreen-area-unlock')
+    _camera_button_locator = (By.ID, 'lockscreen-area-camera')
 
-    _camera_frame_locator = ('css selector', 'iframe[src*="camera"][src*="/index.html"]')
+    _camera_frame_locator = (By.CSS_SELECTOR, 'iframe[src*="camera"][src*="/index.html"]')
 
     def swipe_to_unlock(self):
 
