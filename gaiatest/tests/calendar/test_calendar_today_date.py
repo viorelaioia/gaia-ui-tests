@@ -3,14 +3,15 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import datetime
+from marionette.by import By
 
 from gaiatest import GaiaTestCase
 
 
 class TestCalendar(GaiaTestCase):
 
-    _current_month_year_locator = ('id', 'current-month-year')
-    _selected_day_title_locator = ('id', 'selected-day-title')
+    _current_month_year_locator = (By.ID, 'current-month-year')
+    _selected_day_title_locator = (By.ID, 'selected-day-title')
 
     def setUp(self):
         GaiaTestCase.setUp(self)
