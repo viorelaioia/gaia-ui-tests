@@ -2,6 +2,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+from marionette.by import By
 from marionette.keys import Keys
 from gaiatest.apps.base import Base
 
@@ -11,28 +12,28 @@ class Marketplace(Base):
     # Default to the Dev app
     name = 'Marketplace Dev'
 
-    _marketplace_iframe_locator = ('css selector', 'iframe[src*="marketplace"]')
+    _marketplace_iframe_locator = (By.CSS_SELECTOR, 'iframe[src*="marketplace"]')
 
-    _gallery_apps_locator = ('css selector', '#gallery .app')
-    _loading_fragment_locator = ('css selector', 'div.loading-fragment')
-    _error_title_locator = ('css selector', 'div.modal-dialog-message-container > h3.title')
-    _error_message_locator = ('css selector', 'div.modal-dialog-message-container .message')
-    _settings_button_locator = ('css selector', 'a.header-button.settings')
-    _home_button_locator = ('css selector', 'h1.site a')
-    _back_button_locator = ('id', 'nav-back')
-    _notification_locator = ('id', 'notification-content')
-    _popular_apps_tab_locator = ('css selector', '#gallery .tabs a:nth-child(1)')
+    _gallery_apps_locator = (By.CSS_SELECTOR, '#gallery .app')
+    _loading_fragment_locator = (By.CSS_SELECTOR, 'div.loading-fragment')
+    _error_title_locator = (By.CSS_SELECTOR, 'div.modal-dialog-message-container > h3.title')
+    _error_message_locator = (By.CSS_SELECTOR, 'div.modal-dialog-message-container .message')
+    _settings_button_locator = (By.CSS_SELECTOR, 'a.header-button.settings')
+    _home_button_locator = (By.CSS_SELECTOR, 'h1.site a')
+    _back_button_locator = (By.ID, 'nav-back')
+    _notification_locator = (By.ID, 'notification-content')
+    _popular_apps_tab_locator = (By.CSS_SELECTOR, '#gallery .tabs a:nth-child(1)')
 
     # Marketplace settings tabs
-    _account_tab_locator = ('css selector', 'a[href="/settings"]')
-    _my_apps_tab_locator = ('css selector', 'a[href="/purchases"]')
-    _feedback_tab_locator = ('css selector', 'a[href="/feedback"]')
-    _feedback_textarea_locator = ('name', 'feedback')
-    _feedback_submit_button_locator = ('css selector', 'button[type="submit"]')
+    _account_tab_locator = (By.CSS_SELECTOR, 'a[href="/settings"]')
+    _my_apps_tab_locator = (By.CSS_SELECTOR, 'a[href="/purchases"]')
+    _feedback_tab_locator = (By.CSS_SELECTOR, 'a[href="/feedback"]')
+    _feedback_textarea_locator = (By.NAME, 'feedback')
+    _feedback_submit_button_locator = (By.CSS_SELECTOR, 'button[type="submit"]')
 
     # Marketplace search on home page
-    _search_locator = ('id', 'search-q')
-    _signed_in_notification_locator = ('css selector', '#notification.show')
+    _search_locator = (By.ID, 'search-q')
+    _signed_in_notification_locator = (By.CSS_SELECTOR, '#notification.show')
 
     def __init__(self, marionette, app_name=False):
         Base.__init__(self, marionette)
