@@ -3,6 +3,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import time
+from marionette.by import By
 from gaiatest.apps.base import Base
 from gaiatest.apps.base import PageRegion
 
@@ -11,16 +12,16 @@ class Camera(Base):
 
     name = 'Camera'
 
-    _capture_button_enabled_locator = ('css selector', '#capture-button:not([disabled])')
-    _capture_button_locator = ('id', 'capture-button')
-    _filmstrip_image_locator = ('css selector', '#filmstrip > img.thumbnail')
-    _switch_source_button_locator = ('id', 'switch-button')
-    _video_capturing_locator = ('css selector', 'body.capturing')
-    _video_timer_locator = ('id', 'video-timer')
-    _filmstrip_locator = ('id', 'filmstrip')
-    _focus_ring_locator = ('id', 'focus-ring')
-    _body_locator = ('tag name', 'body')
-    _gallery_button_locator = ('id', 'gallery-button')
+    _capture_button_enabled_locator = (By.CSS_SELECTOR, '#capture-button:not([disabled])')
+    _capture_button_locator = (By.ID, 'capture-button')
+    _filmstrip_image_locator = (By.CSS_SELECTOR, '#filmstrip > img.thumbnail')
+    _switch_source_button_locator = (By.ID, 'switch-button')
+    _video_capturing_locator = (By.CSS_SELECTOR, 'body.capturing')
+    _video_timer_locator = (By.ID, 'video-timer')
+    _filmstrip_locator = (By.ID, 'filmstrip')
+    _focus_ring_locator = (By.ID, 'focus-ring')
+    _body_locator = (By.TAG_NAME, 'body')
+    _gallery_button_locator = (By.ID, 'gallery-button')
 
     def launch(self):
         Base.launch(self)
@@ -97,8 +98,8 @@ class FilmStripImage(PageRegion):
 
 
 class ImagePreview(Base):
-    _image_preview_locator = ('css selector', '#media-frame > img')
-    _camera_button_locator = ('id', 'camera-button')
+    _image_preview_locator = (By.CSS_SELECTOR, '#media-frame > img')
+    _camera_button_locator = (By.ID, 'camera-button')
 
     @property
     def is_image_preview_visible(self):
