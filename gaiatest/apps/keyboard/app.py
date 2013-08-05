@@ -3,6 +3,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+from marionette.by import By
 from gaiatest.apps.base import Base
 from marionette.marionette import Actions
 
@@ -54,7 +55,7 @@ class Keyboard(Base):
                       'spanish']
 
     # special keys locators
-    _language_key_locator = ("css selector", ".keyboard-row button[data-keycode='-3']")
+    _language_key_locator = (By.CSS_SELECTOR, ".keyboard-row button[data-keycode='-3']")
     _numeric_sign_key = '-2'
     _alpha_key = '-1'
     _backspace_key = '8'
@@ -64,10 +65,10 @@ class Keyboard(Base):
     _space_key = '32'
 
     # keyboard app locators
-    _keyboard_frame_locator = ('css selector', '#keyboard-frame iframe')
-    _keyboard_locator = ('css selector', '#keyboard')
-    _button_locator = ('css selector', 'button.keyboard-key[data-keycode="%s"]')
-    _highlight_key_locator = ('css selector', 'div.highlighted button')
+    _keyboard_frame_locator = (By.CSS_SELECTOR, '#keyboard-frame iframe')
+    _keyboard_locator = (By.CSS_SELECTOR, '#keyboard')
+    _button_locator = (By.CSS_SELECTOR, 'button.keyboard-key[data-keycode="%s"]')
+    _highlight_key_locator = (By.CSS_SELECTOR, 'div.highlighted button')
 
     # find the key to long press and return
     def _find_key_for_longpress(self, input_value):
@@ -188,7 +189,7 @@ class Keyboard(Base):
     # "sr-Latn":"srpski",
     # "tr":"Türkçe"}
     def switch_keyboard_language(self, lang_code):
-        keyboard_language_locator = ("css selector", ".keyboard-row button[data-keyboard='%s']" % lang_code)
+        keyboard_language_locator = (By.CSS_SELECTOR, ".keyboard-row button[data-keyboard='%s']" % lang_code)
 
         self.switch_to_keyboard()
         language_key = self.marionette.find_element(*self._language_key_locator)
