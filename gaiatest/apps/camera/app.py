@@ -25,7 +25,7 @@ class Camera(Base):
 
     # locators for the case when other apps open camera app
     _select_button_locator = ('id', 'select-button')
-    _camera_frame_locator = ('css selector', 'iframe[data-frame-origin=app\:\/\/camera\.gaiamobile\.org]')
+    _camera_frame_locator = ('css selector', 'iframe[data-frame-origin*=camera]')
 
     def launch(self):
         Base.launch(self)
