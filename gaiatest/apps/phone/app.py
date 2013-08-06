@@ -2,7 +2,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import time
+from marionette.by import By
 from gaiatest.apps.base import Base
 
 
@@ -10,13 +10,13 @@ class Phone(Base):
 
     name = "Phone"
 
-    _dialog_locator = ('id', 'confirmation-message')
-    _dialog_title_locator = ('xpath', "//*[@id='confirmation-message']/section/h1")
-    _call_log_toolbar_button_locator = ('id', 'option-recents')
-    _contacts_view_locator = ('id', 'option-contacts')
-    _keypad_toolbar_button_locator = ('id', 'option-keypad')
+    _dialog_locator = (By.ID, 'confirmation-message')
+    _dialog_title_locator = (By.XPATH, "//*[@id='confirmation-message']/section/h1")
+    _call_log_toolbar_button_locator = (By.ID, 'option-recents')
+    _contacts_view_locator = (By.ID, 'option-contacts')
+    _keypad_toolbar_button_locator = (By.ID, 'option-keypad')
 
-    _contacts_frame_locator = ('css selector', '#iframe-contacts')
+    _contacts_frame_locator = (By.ID, 'iframe-contacts')
 
     @property
     def keypad(self):
