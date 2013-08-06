@@ -11,6 +11,7 @@ from gaiatest.apps.camera.app import Camera
 class TestSmsWithAttachments(GaiaTestCase):
 
     def test_sms_send(self):
+        self.connect_to_network()
         _text_message_content = "Automated Test %s" % str(time.time())
 
         # launch the app
@@ -45,9 +46,10 @@ class TestSmsWithAttachments(GaiaTestCase):
         last_message = self.message_thread.all_messages[-1]
 
         # Check the most recent received message has the same text content
-        self.assertEqual(_text_message_content, last_received_message.text)
+        self.assertEqual(_text_message_content, last_received_message.text.strip('\n').strip())
 
         # Check that most recent message is also the most recent received message
         self.assertEqual(last_received_message.id, last_message.id)
 
-        # TODO check that the most recent message has an image attachment
+        # Check that message has attachments
+        self.assertTrue(last_message.has_attachments)
