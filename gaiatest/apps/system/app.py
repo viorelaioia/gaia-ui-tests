@@ -2,17 +2,18 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+from marionette.by import By
 from gaiatest.apps.base import Base
 
 
 class System(Base):
 
     # status bar
-    _status_bar_locator = ('id', 'statusbar')
-    _status_bar_notification_locator = ('id', 'statusbar-notification')
+    _status_bar_locator = (By.ID, 'statusbar')
+    _status_bar_notification_locator = (By.ID, 'statusbar-notification')
 
-    _notification_toaster_locator = ('id', 'notification-toaster')
-    _update_manager_toaster_locator = ('id', 'update-manager-toaster')
+    _notification_toaster_locator = (By.ID, 'notification-toaster')
+    _update_manager_toaster_locator = (By.ID, 'update-manager-toaster')
 
     def wait_for_status_bar_displayed(self):
         self.wait_for_element_displayed(*self._status_bar_locator)

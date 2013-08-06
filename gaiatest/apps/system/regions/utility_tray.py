@@ -2,14 +2,15 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+from marionette.by import By
 from gaiatest.apps.base import Base
 from gaiatest.apps.base import PageRegion
 
 
 class UtilityTray(Base):
-    _notification_container_locator = ('id', 'notifications-container')
-    _desktop_notifications_locator = ('css selector', '#desktop-notifications-container .notification')
-    _notification_clear_locator = ('id', 'notification-clear')
+    _notification_container_locator = (By.ID, 'notifications-container')
+    _desktop_notifications_locator = (By.CSS_SELECTOR, '#desktop-notifications-container .notification')
+    _notification_clear_locator = (By.ID, 'notification-clear')
 
     def wait_for_notification_container_displayed(self):
         # Marionette cannot read the displayed state of the notification container so we wait for its location
@@ -25,7 +26,7 @@ class UtilityTray(Base):
 
 
 class Notification(PageRegion):
-    _body_locator = ('css selector', 'div.detail')
+    _body_locator = (By.CSS_SELECTOR, 'div.detail')
 
     @property
     def content(self):
