@@ -15,6 +15,8 @@ class LockScreen(Base):
     _lockscreen_handle_locator = (By.ID, 'lockscreen-area-handle')
     _unlock_button_locator = (By.ID, 'lockscreen-area-unlock')
     _camera_button_locator = (By.ID, 'lockscreen-area-camera')
+    _passcode_pad_locator = (By.ID, 'lockscreen-passcode-pad')
+    _passcode_pad_button_locator = (By.CSS_SELECTOR, 'a[data-key="%s"]')
 
     _camera_frame_locator = (By.CSS_SELECTOR, 'iframe[src*="camera"][src*="/index.html"]')
 
@@ -55,3 +57,12 @@ class LockScreen(Base):
 
     def wait_for_lockscreen_handle_visible(self):
         self.wait_for_element_displayed(*self._lockscreen_handle_locator)
+
+    def type_passcode(self, passcode):
+        self.wait_for_element_displayed(*self._passcode_pad_locator)
+        passcode_pad = self.marionette.find_element(*self._passcode_pad_locator)
+
+        for digit in passcode:
+            button_locator = (self._passcode_pad_button_locator[0],
+                              self._passcode_pad_button_locator[1] % digit)
+            passcode_pad.find_element(*button_locator).tap()
