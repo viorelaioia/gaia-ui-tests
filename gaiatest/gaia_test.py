@@ -386,7 +386,7 @@ class GaiaDevice(object):
             # launch the gecko instance attached to marionette
             self.marionette.instance.start()
         elif self.is_android_build:
-            self.manager.shellCheckOutput(['su', '-c', 'start', 'b2g'])
+            self.manager.shellCheckOutput(['start', 'b2g'])
         else:
             raise Exception('Unable to start B2G')
         self.marionette.wait_for_port()
@@ -405,7 +405,7 @@ window.addEventListener('mozbrowserloadend', function loaded(aEvent) {
             # close the gecko instance attached to marionette
             self.marionette.instance.close()
         elif self.is_android_build:
-            self.manager.shellCheckOutput(['su', '-c', 'stop', 'b2g'])
+            self.manager.shellCheckOutput(['stop', 'b2g'])
         else:
             raise Exception('Unable to stop B2G')
         self.marionette.client.close()
