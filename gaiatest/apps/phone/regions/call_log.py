@@ -8,12 +8,14 @@ from gaiatest.apps.phone.app import Phone
 
 class CallLog(Phone):
 
+    _upgrade_progress_locator = (By.ID, 'call-log-upgrading')
     _all_calls_tab_locator = (By.ID, 'all-filter')
     _all_calls_tab_link_locator = (By.CSS_SELECTOR, '#all-filter a')
     _all_calls_list_item_locator = (By.CSS_SELECTOR, 'li.log-item')
 
     def __init__(self, marionette):
         Phone.__init__(self, marionette)
+        self.wait_for_element_not_displayed(*self._upgrade_progress_locator)
         self.wait_for_element_displayed(*self._all_calls_tab_locator)
 
     def tap_all_calls_tab(self):
