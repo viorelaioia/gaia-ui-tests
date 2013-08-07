@@ -316,9 +316,9 @@ class GaiaData(object):
 
 class GaiaDevice(object):
 
-    def __init__(self, marionette, testvars):
+    def __init__(self, marionette, testvars=None):
         self.marionette = marionette
-        self.testvars = testvars
+        self.testvars = testvars or {}
 
     @property
     def manager(self):
