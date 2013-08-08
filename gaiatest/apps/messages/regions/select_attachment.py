@@ -2,13 +2,14 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+from marionette.by import By
 from gaiatest.apps.base import Base
 from gaiatest.apps.camera.app import Camera
 
 
 class SelectAttachment(Base):
 
-    _actions_menu_locator = ('css selector', 'div[role=dialog] > menu.actions')
+    _actions_menu_locator = (By.CSS_SELECTOR, 'div[role=dialog] > menu.actions')
 
     def __init__(self, marionette):
         Base.__init__(self, marionette)
@@ -17,7 +18,7 @@ class SelectAttachment(Base):
 
     def tap_attachment_type(self, attachment_type):
         menu = self.marionette.find_element(*self._actions_menu_locator)
-        for item in menu.marionette.find_elements('css selector', 'li'):
+        for item in menu.find_elements(By.CSS_SELECTOR, 'li'):
             if item.text == attachment_type:
                 item.tap()
                 break

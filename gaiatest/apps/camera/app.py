@@ -24,8 +24,8 @@ class Camera(Base):
     _gallery_button_locator = (By.ID, 'gallery-button')
 
     # locators for the case when other apps open camera app
-    _select_button_locator = ('id', 'select-button')
-    _camera_frame_locator = ('css selector', 'iframe[data-frame-origin*=camera]')
+    _select_button_locator = (By.ID, 'select-button')
+    _camera_frame_locator = (By.CSS_SELECTOR, 'iframe[data-frame-origin*=camera]')
 
     def launch(self):
         Base.launch(self)
