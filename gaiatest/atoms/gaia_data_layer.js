@@ -499,15 +499,6 @@ var GaiaDataLayer = {
     }
   },
 
-  deleteAllAlarms: function() {
-    window.wrappedJSObject.AlarmManager.getAlarmList (function(aList) {
-      aList.forEach(function(aAlarm) {
-         console.log("Deleting alarm with id  '" + aAlarm.id + "'");
-         window.wrappedJSObject.AlarmManager.delete(aAlarm);
-      });
-    });
-  },
-
   bluetoothSetDeviceName: function(device_name, aCallback) {
     var callback = aCallback || marionetteScriptFinished;
     console.log("Setting device's bluetooth name to '%s'" % device_name);
