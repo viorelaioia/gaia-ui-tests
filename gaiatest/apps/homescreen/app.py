@@ -10,11 +10,17 @@ class Homescreen(Base):
 
     name = 'Homescreen'
 
+    _homescreen_iframe_locator = (By.CSS_SELECTOR, 'div.homescreen iframe')
     _homescreen_icon_locator = (By.CSS_SELECTOR, 'li.icon[aria-label="%s"]')
     _search_bar_icon_locator = (By.ID, 'evme-activation-icon')
 
     def launch(self):
         Base.launch(self)
+
+    def switch_to_homescreen_frame(self):
+        self.marionette.switch_to_frame()
+        hs_frame = self.marionette.find_element(*self._homescreen_iframe_locator)
+        self.marionette.switch_to_frame(hs_frame)
 
     def tap_search_bar(self):
         search_bar = self.marionette.find_element(*self._search_bar_icon_locator)
