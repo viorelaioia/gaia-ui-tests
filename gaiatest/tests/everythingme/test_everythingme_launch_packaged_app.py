@@ -6,15 +6,15 @@ from gaiatest import GaiaTestCase
 from gaiatest.apps.homescreen.app import Homescreen
 
 
-class TestHomescreenSearchPanel(GaiaTestCase):
+class TestEverythingMeSearchPanel(GaiaTestCase):
 
     app_name = 'Calendar'
 
     def setUp(self):
         GaiaTestCase.setUp(self)
 
-    def test_homescreen_launch_packaged_app_from_search_panel(self):
-        """Launch packaged app from homescreen search panel
+    def test_launch_packaged_app_from_search_panel(self):
+        """Launch packaged app from homescreen search panel.
 
         https://github.com/mozilla/gaia-ui-tests/issues/1169
         """
