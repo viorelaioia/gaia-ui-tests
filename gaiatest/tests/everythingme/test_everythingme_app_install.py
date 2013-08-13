@@ -2,14 +2,11 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-from marionette.by import By
 from gaiatest import GaiaTestCase
 from gaiatest.apps.homescreen.app import Homescreen
 
 
 class TestEverythingMeInstallApp(GaiaTestCase):
-
-    _homescreen_frame_locator = (By.CSS_SELECTOR, 'div.homescreen > iframe')
 
     def setUp(self):
         GaiaTestCase.setUp(self)
@@ -20,7 +17,7 @@ class TestEverythingMeInstallApp(GaiaTestCase):
         # https://github.com/mozilla/gaia-ui-tests/issues/67
 
         homescreen = Homescreen(self.marionette)
-        homescreen.launch()
+        homescreen.switch_to_homescreen_frame()
 
         search_panel = homescreen.tap_search_bar()
         search_panel. wait_for_categories_to_load()
@@ -32,9 +29,8 @@ class TestEverythingMeInstallApp(GaiaTestCase):
         search_panel.results[0].tap_to_install()
 
         # return to home screen
-        hs_frame = self.marionette.find_element(*self._homescreen_frame_locator)
         self.marionette.execute_script("window.wrappedJSObject.dispatchEvent(new Event('home'));")
-        self.marionette.switch_to_frame(hs_frame)
+        homescreen.switch_to_homescreen_frame()
 
         self.assertTrue(homescreen.is_app_installed(app_name),
                         'The app %s was not found to be installed on the home screen.' % app_name)
