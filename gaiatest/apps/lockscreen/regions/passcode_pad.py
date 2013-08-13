@@ -10,7 +10,6 @@ class PasscodePad(PageRegion):
 
     _numeric_button_locator = (By.CSS_SELECTOR, 'a[data-key="%s"]')
     _emergency_button_locator = (By.CSS_SELECTOR, 'a[data-key="e"]')
-    _emergency_frame_locator = (By.CSS_SELECTOR, 'iframe[src*="/emergency-call/"]')
 
     def type_passcode(self, passcode):
         for digit in passcode:
@@ -20,7 +19,9 @@ class PasscodePad(PageRegion):
 
     def tap_emergency_call(self):
         self.root_element.find_element(*self._emergency_button_locator).tap()
-        emergency_frame = self.marionette.find_element(*self._emergency_frame_locator)
-        self.marionette.switch_to_frame(emergency_frame)
-        self.wait_for_condition(
-            lambda m: m.execute_script('return document.title') == 'Emergency Call Dialer')
+
+        from gaiatest.apps.system.regions.emergency_call import EmergencyCallScreen
+        emergency_screen = EmergencyCallScreen(self.marionette)
+        emergency_screen.switch_to_emergency_call_screen()
+
+        return emergency_screen

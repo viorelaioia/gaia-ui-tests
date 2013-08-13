@@ -17,8 +17,6 @@ class LockScreen(Base):
     _camera_button_locator = (By.ID, 'lockscreen-area-camera')
     _passcode_pad_locator = (By.ID, 'lockscreen-passcode-pad')
 
-    _camera_frame_locator = (By.CSS_SELECTOR, 'iframe[src*="camera"][src*="/index.html"]')
-
     def swipe_to_unlock(self):
 
         unlock_handle = self.marionette.find_element(*self._lockscreen_handle_locator)
@@ -60,5 +58,5 @@ class LockScreen(Base):
     def passcode_pad(self):
         self.wait_for_element_displayed(*self._passcode_pad_locator)
         passcode_pad = self.marionette.find_element(*self._passcode_pad_locator)
-        from .regions.passcode_pad import PasscodePad
+        from gaiatest.apps.lockscreen.regions.passcode_pad import PasscodePad
         return PasscodePad(self.marionette, passcode_pad)
