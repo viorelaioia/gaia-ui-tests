@@ -34,7 +34,7 @@ class TestLockScreen(GaiaTestCase):
         """
         self.lock_screen.swipe_to_unlock()
         self.lock_screen.tap_unlock_button()
-        self.lock_screen.type_passcode(self._input_passcode)
+        self.lock_screen.passcode_pad.type_passcode(self._input_passcode)
 
         self.lock_screen.wait_for_lockscreen_not_visible()
 
