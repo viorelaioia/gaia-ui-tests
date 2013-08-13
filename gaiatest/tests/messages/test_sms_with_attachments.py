@@ -11,7 +11,7 @@ from gaiatest.apps.camera.app import Camera
 class TestSmsWithAttachments(GaiaTestCase):
 
     def test_sms_send(self):
-        self.connect_to_network()
+        self.data_layer.connect_to_cell_data()
         _text_message_content = "Automated Test %s" % str(time.time())
 
         # launch the app
@@ -38,8 +38,8 @@ class TestSmsWithAttachments(GaiaTestCase):
         self.messages.switch_to_messages_frame()
 
         #click send
-        self.message_thread = new_message.tap_send()
-        self.message_thread.wait_for_received_messages()
+        self.message_thread = new_message.tap_send(timeout=300)
+        self.message_thread.wait_for_received_messages(timeout=300)
 
         # get the most recent listed and most recent received text message
         last_received_message = self.message_thread.received_messages[-1]
