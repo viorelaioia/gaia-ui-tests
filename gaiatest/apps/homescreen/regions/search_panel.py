@@ -14,6 +14,7 @@ class SearchPanel(Base):
 
     _search_box_locator = (By.CSS_SELECTOR, '#evme-activation-icon input')
     _search_results_from_everything_me_locator = (By.CSS_SELECTOR, '#evmeAppsList li.cloud[data-name]')
+    _search_results_installed_app_locator = (By.CSS_SELECTOR, '#evmeAppsList li.installed[data-name]')
     _category_item_locator = (By.CSS_SELECTOR, '#shortcuts-items li[data-query]')
     _loading_apps_locator = (By.CSS_SELECTOR, 'div.loading-apps')
     _app_icon_locator = (By.CSS_SELECTOR, 'li.cloud[data-name]')
@@ -33,6 +34,9 @@ class SearchPanel(Base):
 
     def wait_for_app_icons_displayed(self):
         self.wait_for_element_displayed(*self._app_icon_locator)
+
+    def wait_for_installed_apps_displayed(self):
+        self.wait_for_element_displayed(*self._search_results_installed_app_locator)
 
     @property
     def results(self):
@@ -59,6 +63,11 @@ class SearchPanel(Base):
     def categories(self):
         return [self.EverythingMeCategory(self.marionette, root_el) for root_el in
                 self.marionette.find_elements(*self._category_item_locator)]
+
+    @property
+    def installed_apps(self):
+        return [self.InstalledApp(self.marionette, root_el) for root_el in
+                self.marionette.find_elements(*self._search_results_installed_app_locator)]
 
     class EverythingMeCategory(PageRegion):
 
@@ -109,3 +118,13 @@ class SearchPanel(Base):
             self.marionette.find_element(*self._modal_dialog_ok_locator).tap()
 
             return app_name
+
+    class InstalledApp(PageRegion):
+
+        @property
+        def name(self):
+            return self.root_element.get_attribute('data-name')
+
+        def tap(self):
+            self.root_element.tap()
+            self.marionette.switch_to_frame(self.apps.displayed_app.frame)
