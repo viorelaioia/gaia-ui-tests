@@ -10,6 +10,7 @@ class Gallery(Base):
 
     name = 'Gallery'
 
+    _gallery_frame_locator = (By.CSS_SELECTOR, "iframe[src^='app://gallery'][src$='index.html#pick']")
     _gallery_items_locator = (By.CSS_SELECTOR, 'li.thumbnail')
     _empty_gallery_title_locator = (By.ID, 'overlay-title')
     _empty_gallery_text_locator = (By.ID, 'overlay-text')
@@ -21,8 +22,15 @@ class Gallery(Base):
         self.wait_for_element_not_displayed(*self._progress_bar_locator)
         self.wait_for_element_displayed(*self._thumbnail_list_view_locator)
 
+    def switch_to_gallery_frame(self):
+        self.wait_for_element_displayed(*self._gallery_frame_locator)
+        self.marionette.switch_to_frame(self.marionette.find_element(*self._gallery_frame_locator))
+
     def wait_for_files_to_load(self, files_number):
         self.wait_for_condition(lambda m: m.execute_script('return window.wrappedJSObject.files.length') == files_number)
+
+    def wait_for_thumbnails_to_load(self):
+        self.wait_for_element_displayed(*self._gallery_items_locator)
 
     @property
     def gallery_items_number(self):

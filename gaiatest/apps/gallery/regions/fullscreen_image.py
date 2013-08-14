@@ -18,10 +18,10 @@ class FullscreenImage(Base):
     _confirm_delete_locator = (By.ID, 'modal-dialog-confirm-ok')
     _edit_photo_locator = (By.ID, 'fullscreen-edit-button')
     _tile_view_locator = (By.ID, 'fullscreen-back-button')
+    _gallery_crop_done_button_locator = (By.ID, 'crop-done-button')
 
     def __init__(self, marionette):
         Base.__init__(self, marionette)
-        self.wait_for_element_displayed(*self._fullscreen_view_locator)
 
     @property
     def is_photo_toolbar_displayed(self):
@@ -80,3 +80,7 @@ class FullscreenImage(Base):
     @property
     def photo_toolbar_width(self):
         return self.marionette.execute_script('return document.getElementById("fullscreen-toolbar").offsetWidth')
+
+    def tap_crop_done(self):
+        self.wait_for_element_displayed(*self._gallery_crop_done_button_locator)
+        self.marionette.find_element(*self._gallery_crop_done_button_locator).tap()
