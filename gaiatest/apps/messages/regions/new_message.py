@@ -32,9 +32,9 @@ class NewMessage(Base):
         message_field.tap()
         message_field.send_keys(value)
 
-    def tap_send(self):
+    def tap_send(self, timeout=120):
         self.marionette.find_element(*self._send_message_button_locator).tap()
-        self.wait_for_element_not_present(*self._message_sending_locator, timeout=120)
+        self.wait_for_element_not_present(*self._message_sending_locator, timeout=timeout)
         from gaiatest.apps.messages.regions.message_thread import MessageThread
         return MessageThread(self.marionette)
 
