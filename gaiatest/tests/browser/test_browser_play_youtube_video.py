@@ -53,7 +53,7 @@ class TestYouTube(GaiaTestCase):
         self.assertTrue(player.is_video_playing())
 
         # Forward
-        forward_point = (player.duration - player.current_timestamp) / 2
+        forward_point = (player.playback_duration - player.current_timestamp) / 2
         player.seek(forward_point)
         player.wait_till_video_loaded()
         self.assertTrue(player.is_video_playing)

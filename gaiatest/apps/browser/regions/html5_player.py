@@ -8,45 +8,51 @@ from gaiatest.apps.base import PageRegion
 
 
 class HTML5Player(PageRegion):
-    """Represents HTML5 Player
+    """Represents HTML5 Player.
 
     Reference:
     http://www.w3.org/TR/2012/WD-html5-20121025/media-elements.html#media-element
     """
 
-    script_template = 'return document.getElementsByTagName("video")[0]'
+    @property
+    def has_enough_data(self):
+        return int(self.root_element.get_attribute('readyState')) == 4
 
     def wait_till_video_loaded(self):
-        # wait till player HAVE_ENOUGH_DATA
-        self.wait_for_condition(lambda m: m.execute_script('%s.readyState == 4' % self.script_template))
+        self.wait_for_condition(lambda m: self.has_enough_data)
+
+    @property
+    def is_paused(self):
+        value = self.root_element.get_attribute('paused')
+        return value == 'true' and True or False
 
     def invoke_controls(self):
-        # there is no way to verify that they're present
         self.root_element.tap()
         time.sleep(.25)
 
     def play(self):
         self.invoke_controls()
         self.root_element.tap()
-        self.wait_for_condition(lambda m: not m.execute_script('%s.paused' % self.script_template))
+        self.wait_for_condition(lambda m: not self.is_paused)
         return self.current_timestamp
 
     def pause(self):
         self.invoke_controls()
         self.root_element.tap()
-        self.wait_for_condition(lambda m: m.execute_script('%s.paused' % self.script_template))
+        self.wait_for_condition(lambda m: self.is_paused)
         return self.current_timestamp
 
     def seek(self, timestamp):
         t = float(timestamp)
-        if 0 <= t <= self.duration:
-            self.marionette.execute_script('%s.currentTime = %s' % (self.script_template, t))
+        if 0 <= t <= self.playback_duration:
+            self.marionette.execute_script('arguments[0].currentTime = arguments[1]',
+                                           script_args=[self.root_element, t])
         else:
-            raise Exception('Provided value is not in range [0; %s]' % self.duration)
+            raise Exception('Provided value is not in range [0; %s]' % self.playback_duration)
 
     def is_video_playing(self):
         # get 4 timestamps during approx. 1 sec
-        # ensure that newer timestamp has bigger value than previous one
+        # ensure that newer timestamp has greater value than previous one
         timestamps = []
         for i in range(4):
             timestamps.append(self.current_timestamp)
@@ -55,8 +61,8 @@ class HTML5Player(PageRegion):
 
     @property
     def current_timestamp(self):
-        return self.marionette.execute_script('%s.currentTime' % self.script_template)
+        return float(self.root_element.get_attribute('currentTime'))
 
     @property
-    def duration(self):
-        return self.marionette.execute_script('%s.duration' % self.script_template)
+    def playback_duration(self):
+        return float(self.root_element.get_attribute('duration'))
