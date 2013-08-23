@@ -111,4 +111,4 @@ class Settings(Base):
         # TODO bug 878017 - remove the explicit scroll once bug is fixed
         self.marionette.execute_script("arguments[0].scrollIntoView(false);", [menu_item])
         menu_item.tap()
-        self.wait_for_condition(lambda m: menu_item.location['x'] + menu_item.size['width'] == 0)
+        self.wait_for_condition(lambda m: menu_item.location['x'] + menu_item.size['width'] == -15)
