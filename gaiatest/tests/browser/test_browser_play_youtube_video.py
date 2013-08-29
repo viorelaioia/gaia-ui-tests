@@ -11,8 +11,9 @@ from gaiatest.apps.browser.regions.html5_player import HTML5Player
 class TestYouTube(GaiaTestCase):
 
     video_URL = 'http://m.youtube.com/watch?v=5MzuGWFIfio'
+    acceptable_delay = 2.0
 
-    # YouTube video
+    # YouTube video locators
     _video_container_locator = (By.CSS_SELECTOR, 'div[style^="background-image"]')
     _video_element_locator = (By.TAG_NAME, 'video')
 
@@ -40,26 +41,21 @@ class TestYouTube(GaiaTestCase):
         player = HTML5Player(self.marionette, video)
 
         # Check that video is playing
-        player.wait_till_video_loaded()
+        player.wait_for_video_loaded()
         self.assertTrue(player.is_video_playing())
 
         # Pause playback
-        stopped_at = player.pause()
+        player.pause()
+        stopped_at = player.current_timestamp
         self.assertFalse(player.is_video_playing())
 
         # Resume playback
-        resumed_at = player.play()
-        self.assertTrue(resumed_at - stopped_at < 1)
+        player.play()
+        resumed_at = player.current_timestamp
         self.assertTrue(player.is_video_playing())
 
-        # Forward
-        forward_point = (player.playback_duration - player.current_timestamp) / 2
-        player.seek(forward_point)
-        player.wait_till_video_loaded()
-        self.assertTrue(player.is_video_playing)
-
-        # Rewind
-        backward_point = player.current_timestamp / 2
-        player.seek(backward_point)
-        player.wait_till_video_loaded()
-        self.assertTrue(player.is_video_playing)
+        # Ensure that video resumes to play
+        # from the place where it was paused
+        delay = resumed_at - stopped_at
+        self.assertLessEqual(delay, self.acceptable_delay,
+                             'video resumed to play not from place where it was paused')
