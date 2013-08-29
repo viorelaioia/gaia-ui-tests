@@ -23,19 +23,42 @@ class HTML5Player(PageRegion):
     def is_paused(self):
         return self.root_element.get_attribute('paused') == 'true'
 
+    @property
+    def is_ended(self):
+        return self.root_element.get_attribute('ended') == 'true'
+
+    @property
+    def has_controls(self):
+        return self.root_element.get_attribute('controls') == 'true'
+
+    def _disable_controls(self):
+        if self.has_controls:
+            self.marionette.execute_script(
+                'arguments[0].removeAttribute("controls")',
+                script_args=[self.root_element])
+
     def invoke_controls(self):
-        self.root_element.tap()
+        if not self.has_controls:
+            self.marionette.execute_script(
+                'arguments[0].setAttribute("controls", "controls")',
+                script_args=[self.root_element])
+            if not (self.is_paused or self.is_ended):
+                self.root_element.tap()
+        else:
+            self.root_element.tap()
         time.sleep(.25)
 
     def play(self):
         self.invoke_controls()
         self.root_element.tap()
         self.wait_for_condition(lambda m: not self.is_paused)
+        self._disable_controls()
 
     def pause(self):
         self.invoke_controls()
         self.root_element.tap()
         self.wait_for_condition(lambda m: self.is_paused)
+        self._disable_controls()
 
     def is_video_playing(self):
         # get 4 timestamps during approx. 1 sec
