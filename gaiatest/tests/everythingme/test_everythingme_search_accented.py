@@ -23,6 +23,8 @@ class TestEverythingMeSearchAccented(GaiaTestCase):
         homescreen.launch()
 
         search_panel = homescreen.tap_search_bar()
+        search_panel.wait_for_tip_to_clear()
+
         search_panel.type_into_search_box(test_string)
         search_panel.wait_for_everything_me_results_to_load()
 

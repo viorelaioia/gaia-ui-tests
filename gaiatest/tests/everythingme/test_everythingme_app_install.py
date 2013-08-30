@@ -17,10 +17,12 @@ class TestEverythingMeInstallApp(GaiaTestCase):
         # https://github.com/mozilla/gaia-ui-tests/issues/67
 
         homescreen = Homescreen(self.marionette)
-        homescreen.switch_to_homescreen_frame()
+        homescreen.launch()
 
         search_panel = homescreen.tap_search_bar()
-        search_panel. wait_for_categories_to_load()
+        search_panel.wait_for_categories_to_load()
+        search_panel.wait_for_tip_to_clear()
+
         self.assertGreater(search_panel.categories_count, 0)
         search_panel.categories[0].tap()
         search_panel.wait_for_app_icons_displayed()
