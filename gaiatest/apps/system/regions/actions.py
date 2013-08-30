@@ -8,14 +8,24 @@ from gaiatest.apps.base import Base
 
 class Actions(Base):
 
-    _gallery_button_locator = (By.XPATH, "//a[text()='Gallery']")
+    _actions_menu_locator = (By.CSS_SELECTOR, '#listmenu .actions')
+
+    _gallery_button_locator = (By.XPATH, '//a[text()="Gallery"]')
+    _camera_button_locator = (By.XPATH, '//a[text()="Camera"]')
 
     def __init__(self, marionette):
         Base.__init__(self, marionette)
         self.marionette.switch_to_frame()
+        self.wait_for_element_displayed(*self._actions_menu_locator)
 
     def tap_gallery(self):
-        self.wait_for_element_displayed(*self._gallery_button_locator)
         self.marionette.find_element(*self._gallery_button_locator).tap()
         from gaiatest.apps.gallery.app import Gallery
         return Gallery(self.marionette)
+
+    def tap_camera(self):
+        self.marionette.find_element(*self._camera_button_locator).tap()
+        from gaiatest.apps.camera.app import Camera
+        camera = Camera(self.marionette)
+        camera.switch_to_camera_frame()
+        return camera
