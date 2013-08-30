@@ -44,8 +44,6 @@ class TestContacts(GaiaTestCase):
         # choose the source as gallery app
         gallery = actions_list.tap_gallery()
 
-        # switch to the gallery app
-        gallery.switch_to_gallery_frame()
         gallery.wait_for_thumbnails_to_load()
         self.assertGreater(gallery.gallery_items_number, 0, 'No photos were found in the gallery.')
 
