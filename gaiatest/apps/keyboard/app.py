@@ -65,7 +65,7 @@ class Keyboard(Base):
     _space_key = '32'
 
     # keyboard app locators
-    _keyboard_frame_locator = (By.CSS_SELECTOR, '#keyboard-frame iframe')
+    _keyboard_frame_locator = (By.CSS_SELECTOR, '#keyboards iframe')
     _keyboard_locator = (By.CSS_SELECTOR, '#keyboard')
     _button_locator = (By.CSS_SELECTOR, 'button.keyboard-key[data-keycode="%s"]')
     _highlight_key_locator = (By.CSS_SELECTOR, 'div.highlighted button')
