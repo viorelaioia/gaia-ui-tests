@@ -11,7 +11,7 @@ from gaiatest.apps.camera.app import Camera
 
 class TestCamera(GaiaTestCase):
 
-    videos_dir = '/sdcard/DCIM/100MZLLA'
+    media_dir = '/sdcard/DCIM/100MZLLA'
 
     def setUp(self):
         GaiaTestCase.setUp(self)
@@ -24,8 +24,6 @@ class TestCamera(GaiaTestCase):
 
         self.camera = Camera(self.marionette)
         self.camera.launch()
-
-        videos_before_test = self.get_sdcard_video_list()
 
         self.camera.tap_switch_source()
 
@@ -47,10 +45,10 @@ class TestCamera(GaiaTestCase):
 
         # Check that video saved to sdcard
         videos_after_test = self.get_sdcard_video_list()
-        self.assertGreater(len(videos_after_test), len(videos_before_test))
+        self.assertEqual(len(videos_after_test), 1)
 
     def get_sdcard_video_list(self):
-        files = self.device.manager.listFiles(self.videos_dir)
+        files = self.device.manager.listFiles(self.media_dir)
         videos = []
         for f in files:
             try:
