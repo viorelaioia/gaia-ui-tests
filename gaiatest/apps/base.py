@@ -144,7 +144,7 @@ class Base(object):
         frame = self.frame or self.apps.displayed_app.frame
         self.marionette.switch_to_frame()
         self.marionette.execute_script('navigator.mozKeyboard.removeFocus();')
-        self.wait_for_condition(lambda m: m.find_element(By.CSS_SELECTOR, '#keyboards iframe').location['y'] == 480)
+        self.wait_for_condition(lambda m: m.find_element(By.CSS_SELECTOR, '#keyboards iframe').is_displayed() == False)
         self.marionette.switch_to_frame(frame)
 
 
