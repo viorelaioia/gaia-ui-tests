@@ -40,5 +40,5 @@ class NewMessage(Base):
 
     def tap_attachment(self):
         self.marionette.find_element(*self._attach_button_locator).tap()
-        from gaiatest.apps.messages.regions.select_attachment import SelectAttachment
-        return SelectAttachment(self.marionette)
+        from gaiatest.apps.system.regions.actions import Actions
+        return Actions(self.marionette)
