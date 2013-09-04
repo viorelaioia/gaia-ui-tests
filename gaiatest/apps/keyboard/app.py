@@ -189,6 +189,9 @@ class Keyboard(Base):
     # "sr-Latn":"srpski",
     # "tr":"Türkçe"}
     def switch_keyboard_language(self, lang_code):
+        # TODO At the moment this doesn't work because the UI has changed
+        # An attempted repair ran into https://bugzilla.mozilla.org/show_bug.cgi?id=779284 (Modal dialog)
+
         keyboard_language_locator = (By.CSS_SELECTOR, ".keyboard-row button[data-keyboard='%s']" % lang_code)
 
         self.switch_to_keyboard()
@@ -198,6 +201,9 @@ class Keyboard(Base):
         target_kb_layout = self.marionette.find_element(*keyboard_language_locator)
         action.move(target_kb_layout).release().perform()
         self.marionette.switch_to_frame()
+
+    def tap_keyboard_language_key(self):
+        self.marionette.find_element(*self._language_key_locator).tap()
 
     # switch to keyboard with numbers and special characters
     def switch_to_number_keyboard(self):
