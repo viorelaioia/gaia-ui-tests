@@ -29,7 +29,7 @@ class NewAlarm(Clock):
         label = self.marionette.find_element(*self._alarm_name_locator)
         label.clear()
         label.send_keys(value)
-        self.dismiss_keyboard()
+        self.keyboard.dismiss()
 
     @property
     def alarm_label_placeholder(self):
