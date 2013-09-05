@@ -18,6 +18,7 @@ class Settings(Base):
     _region_select_locator = (By.ID, 'region')
     _region_select_value_locator = (By.CSS_SELECTOR, '#region option[selected]')
     _save_changes_button_locator = (By.XPATH, "//section[@id='account-settings']//button[text()='Save Changes']")
+    _notification_locator = (By.ID, 'notification-content')
 
     def __init__(self, marionette):
         Base.__init__(self, marionette)
@@ -51,6 +52,7 @@ class Settings(Base):
 
     def tap_save_changes(self):
         self.marionette.find_element(*self._save_changes_button_locator).tap()
+        self.wait_for_element_not_displayed(*self._notification_locator)
 
     @property
     def region(self):
