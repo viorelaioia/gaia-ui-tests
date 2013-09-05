@@ -11,8 +11,6 @@ from gaiatest.apps.camera.app import Camera
 
 class TestCamera(GaiaTestCase):
 
-    media_dir = '/sdcard/DCIM/100MZLLA'
-
     def setUp(self):
         GaiaTestCase.setUp(self)
 
@@ -44,16 +42,18 @@ class TestCamera(GaiaTestCase):
         self.assertTrue(self.camera.is_filmstrip_visible)
 
         # Check that video saved to sdcard
-        videos_after_test = self.get_sdcard_video_list()
+        videos_after_test = self.get_video_files()
         self.assertEqual(len(videos_after_test), 1)
 
-    def get_sdcard_video_list(self):
-        files = self.device.manager.listFiles(self.media_dir)
+    def get_video_files(self):
+        # camera app doesn't have permissions to access
+        # all media files on device, so switch to system app
+        self.marionette.switch_to_frame()
         videos = []
-        for f in files:
+        for f in self.data_layer.media_files:
             try:
-                name = re.search('(?P<name>.*)[.]3gp', f).groupdict()['name']
-                videos.append(name)
+                match = re.search('(.*[.]3gp)', f)
+                videos.append(match.group(1))
             except AttributeError:
                 pass
         return videos
