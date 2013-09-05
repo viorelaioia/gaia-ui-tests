@@ -111,7 +111,7 @@ class Keyboard(Base):
         try:
             key = self.marionette.find_element(*self._key_locator(val))
             self.wait_for_condition(lambda m: key.is_displayed)
-            key.tap()
+            Actions(self.marionette).press(key).wait(0.1).release().perform()
         except:
             raise Exception('Key %s not found on the keyboard' % val)
 
