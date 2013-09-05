@@ -4,8 +4,11 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from marionette.by import By
-from gaiatest.apps.base import Base
+from marionette.errors import NoSuchElementException
+from marionette.errors import ElementNotVisibleException
 from marionette.marionette import Actions
+
+from gaiatest.apps.base import Base
 
 
 class Keyboard(Base):
@@ -112,8 +115,9 @@ class Keyboard(Base):
             key = self.marionette.find_element(*self._key_locator(val))
             self.wait_for_condition(lambda m: key.is_displayed)
             Actions(self.marionette).press(key).wait(0.1).release().perform()
-        except:
-            raise Exception('Key %s not found on the keyboard' % val)
+        except (NoSuchElementException, ElementNotVisibleException):
+            self.marionette.log('Key %s not found on the keyboard' % val)
+            raise
 
     # This is for selecting special characters after long pressing
     # "selection" is the nth special element you want to select (n>=1)
