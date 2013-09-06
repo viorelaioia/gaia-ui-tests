@@ -56,6 +56,7 @@ class TestMarketplacePurchaseAppOnDevWithMockedBango(GaiaTestCase):
         time.sleep(3)
 
         settings.tap_save_changes()
+        marketplace.wait_for_notification_message_not_displayed()
 
         # search for a paid app and tap on the price
         search = marketplace.search(self._APP_NAME)
