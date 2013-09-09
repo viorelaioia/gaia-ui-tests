@@ -22,8 +22,10 @@ class TestEverythingMeSearchPanel(GaiaTestCase):
         homescreen.launch()
 
         search_panel = homescreen.tap_search_bar()
+        search_panel.wait_for_keyboard_visible()
         search_panel.type_into_search_box(self.app_name)
-        search_panel.wait_for_installed_apps_displayed()
+
+        homescreen.switch_to_homescreen_frame()
 
         results = search_panel.installed_apps
         self.assertEqual(results[0].name, self.app_name)
