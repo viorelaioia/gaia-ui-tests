@@ -12,14 +12,6 @@ class TestMarketplaceLogin(GaiaTestCase):
 
     MARKETPLACE_DEV_NAME = 'Marketplace Dev'
 
-    # Marketplace locators
-    _settings_button_locator = (By.CSS_SELECTOR, 'a.header-button.settings')
-    _sign_in_button_locator = (By.CSS_SELECTOR, 'a.button.browserid')
-    _signed_in_notification_locator = (By.CSS_SELECTOR, '#notification.show')
-    _sign_out_button_locator = (By.CSS_SELECTOR, 'a.button.logout')
-
-    _email_account_field_locator = (By.ID, 'email')
-
     def setUp(self):
         GaiaTestCase.setUp(self)
         self.connect_to_network()
@@ -45,7 +37,7 @@ class TestMarketplaceLogin(GaiaTestCase):
         self.marketplace.launch()
 
         # wait for signed-in notification at the bottom of the screen to clear
-        self.wait_for_element_not_displayed(*self._signed_in_notification_locator)
+        self.marketplace.wait_for_notification_message_not_displayed()
 
         # Verify that user is logged in
         self.assertEqual(self.user.email, settings.email)
