@@ -477,6 +477,9 @@ class GaiaTestCase(MarionetteTestCase):
         self.data_layer.set_setting("time.timezone", "America/Los_Angeles")
         self.data_layer.set_setting("time.timezone.user-selected", "America/Los_Angeles")
 
+        # Set do not track pref back to the default
+        self.data_layer.set_setting('privacy.donottrackheader.value', '-1')
+
         # restore settings from testvars
         [self.data_layer.set_setting(name, value) for name, value in self.testvars.get('settings', {}).items()]
 
