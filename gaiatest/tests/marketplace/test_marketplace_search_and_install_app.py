@@ -42,6 +42,7 @@ class TestSearchMarketplaceAndInstallApp(GaiaTestCase):
 
         first_result.tap_install_button()
         self.confirm_installation()
+        marketplace.wait_for_notification_message_not_displayed()
         self.APP_INSTALLED = True
 
         # Check that the icon of the app is on the homescreen
