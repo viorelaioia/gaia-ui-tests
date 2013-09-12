@@ -6,7 +6,6 @@ import time
 import re
 from marionette.keys import Keys
 from gaiatest.apps.base import Base
-from gaiatest.apps.keyboard.app import Keyboard
 
 
 class Bango(Base):
@@ -61,7 +60,6 @@ class Bango(Base):
 
     def __init__(self, marionette):
         Base.__init__(self, marionette)
-        self.keyboard = Keyboard(self.marionette)
         self.switch_to_bango_frame()
 
     def launch(self):
