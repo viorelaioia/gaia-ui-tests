@@ -25,7 +25,11 @@ class Settings(Base):
     _phone_lock_menu_item_locator = (By.ID, 'menuItem-phoneLock')
     _display_menu_item_locator = (By.ID, 'menuItem-display')
     _wifi_menu_item_locator = (By.ID, 'menuItem-wifi')
+<<<<<<< HEAD
     _device_info_menu_item_locator = (By.ID, 'menuItem-deviceInfo')
+=======
+    _app_permissions_menu_item_locator = (By.ID, 'menuItem-appPermissions')
+>>>>>>> ecb723e... Add a test to open app permissions and verify the content
 
     def launch(self):
         Base.launch(self)
@@ -110,6 +114,11 @@ class Settings(Base):
         from gaiatest.apps.settings.regions.device_info import DeviceInfo
         self._tap_menu_item(self._device_info_menu_item_locator)
         return DeviceInfo(self.marionette)
+
+    def open_app_permissions_settings(self):
+        from gaiatest.apps.settings.regions.app_permissions import AppPermissions
+        self._tap_menu_item(self._app_permissions_menu_item_locator)
+        return AppPermissions(self.marionette)
 
     def _tap_menu_item(self, menu_item_locator):
         self.wait_for_element_displayed(*menu_item_locator)
