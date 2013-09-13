@@ -434,7 +434,7 @@ class GaiaTestCase(MarionetteTestCase):
             self.device.stop_b2g()
             if self.device.is_android_build:
                 # revert device to a clean state
-                self.device.manager.removeDir('/data/local/indexedDB')
+                self.device.manager.removeDir('/data/local/storage/persistent')
                 self.device.manager.removeDir('/data/b2g/mozilla')
             self.device.start_b2g()
 
