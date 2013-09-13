@@ -9,7 +9,6 @@ from gaiatest.apps.phone.app import Phone
 
 class TestDialerAddContact(GaiaTestCase):
 
-
     def setUp(self):
         GaiaTestCase.setUp(self)
         self.contact = MockContact()

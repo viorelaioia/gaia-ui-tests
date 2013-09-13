@@ -57,7 +57,6 @@ class Bango(Base):
     # Fake payment
     _fake_payment_button_locator = ('css selector', 'section.pay p.centered')
 
-
     def __init__(self, marionette):
         Base.__init__(self, marionette)
         self.switch_to_bango_frame()
