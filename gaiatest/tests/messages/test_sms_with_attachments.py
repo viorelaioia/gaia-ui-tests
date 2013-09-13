@@ -26,8 +26,8 @@ class TestSmsWithAttachments(GaiaTestCase):
         new_message.type_phone_number(self.testvars['carrier']['phone_number'])
 
         new_message.type_message(self._text_message_content)
-        actions_list = new_message.tap_attachment()
-        camera = actions_list.tap_camera()
+        activities_list = new_message.tap_attachment()
+        camera = activities_list.tap_camera()
 
         camera.wait_for_camera_ready()
         camera.tap_capture()
