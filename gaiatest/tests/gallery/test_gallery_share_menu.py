@@ -23,9 +23,9 @@ class TestGalleryShareMenu(GaiaTestCase):
         self.assertTrue(image.is_photo_toolbar_displayed)
 
         # click on share button and check the element is correct
-        actions_list = image.tap_share_button()
-        self.assertGreater(actions_list.options_count, 1)
-        actions_list.tap_cancel()
+        activities_list = image.tap_share_button()
+        self.assertGreater(activities_list.options_count, 1)
+        activities_list.tap_cancel()
 
         gallery = image.tap_tile_view_button()
         gallery.wait_for_thumbnails_to_load()

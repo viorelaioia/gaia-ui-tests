@@ -39,10 +39,10 @@ class TestContacts(GaiaTestCase):
 
         saved_picture_style = edit_contact.picture_style
 
-        actions_list = edit_contact.tap_picture()
+        activities_list = edit_contact.tap_picture()
 
         # choose the source as gallery app
-        gallery = actions_list.tap_gallery()
+        gallery = activities_list.tap_gallery()
 
         gallery.wait_for_thumbnails_to_load()
         self.assertGreater(gallery.gallery_items_number, 0, 'No photos were found in the gallery.')
