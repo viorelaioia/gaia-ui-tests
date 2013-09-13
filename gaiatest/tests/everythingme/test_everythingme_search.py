@@ -9,7 +9,6 @@ from gaiatest.apps.homescreen.app import Homescreen
 
 class TestEverythingMeSearch(GaiaTestCase):
 
-
     def setUp(self):
         GaiaTestCase.setUp(self)
         self.apps.set_permission('Homescreen', 'geolocation', 'deny')
