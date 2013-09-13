@@ -35,4 +35,4 @@ class TestDialerAirplaneMode(GaiaTestCase):
 
         # Verify that there is no active telephony state; window.navigator.mozTelephony.active is null
         self.assertRaises(JavascriptException, self.marionette.execute_script,
-            "return window.navigator.mozTelephony.active.state;")
+                          "return window.navigator.mozTelephony.active.state;")
