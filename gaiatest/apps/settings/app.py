@@ -28,7 +28,6 @@ class Settings(Base):
     _device_info_menu_item_locator = (By.ID, 'menuItem-deviceInfo')
     _app_permissions_menu_item_locator = (By.ID, 'menuItem-appPermissions')
 
-
     def launch(self):
         Base.launch(self)
         self.wait_for_element_displayed(*self._airplane_switch_locator)
