@@ -29,6 +29,11 @@ class AppPermissionsDetails(Base):
     _section_locator = (By.ID, 'appPermissions-details')
     _permissions_locator = (By.CSS_SELECTOR, 'p[data-l10n-id="perm-geolocation"]')
 
+    def __init__(self, marionette):
+        Base.__init__(self, marionette)
+        section = self.marionette.find_element(*self._section_locator)
+        self.wait_for_condition(lambda m: section.location['x'] == 0)
+
     @property
     def is_geolocation_listed(self):
         return self.marionette.find_element(*self._permissions_locator).is_displayed()
