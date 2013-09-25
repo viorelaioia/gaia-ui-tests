@@ -11,6 +11,7 @@ class MessageThread(Base):
 
     _all_messages_locator = (By.CSS_SELECTOR, '#messages-container li.message')
     _received_message_content_locator = (By.CSS_SELECTOR, "#messages-container li.message.received")
+    _edit_message_locator = (By.ID, 'messages-edit-icon')
 
     def wait_for_received_messages(self, timeout=180):
         self.wait_for_element_displayed(*self._received_message_content_locator, timeout=timeout)
@@ -22,6 +23,42 @@ class MessageThread(Base):
     @property
     def all_messages(self):
         return [Message(self.marionette, message) for message in self.marionette.find_elements(*self._all_messages_locator)]
+
+    def edit_message(self):
+        self.marionette.find_element(*self._edit_message_locator).tap()
+        return EditMessages(self.marionette)
+
+    @property
+    def editmessage(self):
+        return EditMessages(self.marionette)
+
+
+class EditMessages(Base):
+
+    _select_all_messages_button_locator = (By.ID, 'messages-check-all-button')
+    _delete_button_locator = (By.ID, 'messages-delete-button')
+
+    def select_all_messages(self):
+        self.marionette.find_element(*self._select_all_messages_button_locator).tap()
+
+    def delete_selected_messages(self):
+        self.marionette.find_element(*self._delete_button_locator).tap()
+        return DeleteConfirmation(self.marionette)
+
+
+class DeleteConfirmation(Base):
+
+    _message_locator = (By.CSS_SELECTOR, '#modal-dialog-confirm.visible')
+    _confirm_delete_locator = (By.CSS_SELECTOR, '#modal-dialog-confirm-ok')
+
+    def __init__(self, marionette):
+        Base.__init__(self, marionette)
+
+        self.marionette.switch_to_frame()
+        self.wait_for_element_displayed(*self._message_locator)
+
+    def delete_confirmation(self):
+        self.marionette.find_element(*self._confirm_delete_locator).tap()
 
 
 class Message(PageRegion):
